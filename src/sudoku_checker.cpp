@@ -54,10 +54,20 @@ bool is_valid( short b[SIZE][SIZE] )
         
     }
 
+    // Testando cada coluna.
+    for(short col{0}; col<SIZE; col++){
+        t.clear();
+        for (short row{0}; row<SIZE; row++){
+            t.push_back(b[row][col]);
+        }
+        if(!validate(t)) return false;
+        
+    }
+
     // Testando cada quadrado
-    short aux{0};
-    t.clear();
+    short aux{0};    
     for(short i{0}; i < SIZE;i++){
+        t.clear();
         for(short row{aux}; row<aux+3; row++){ 
             for (short col{aux}; col<aux+3; col++){
                 t.push_back(b[row][col]);
