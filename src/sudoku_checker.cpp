@@ -10,10 +10,13 @@ using std::vector;
 
 void print( short b[SIZE][SIZE] )
 {
-    for(short row{0}; row < SIZE;row++){   
+    char letter = 65;
+    std::cout << "   1 2 3   4 5 6   7 8 9\n";  
+    for(short row{0}; row < SIZE;row++){  
         if(row%3==0){
-            std::cout << "+-------+-------+-------+\n";
-        }  
+            std::cout << " +-------+-------+-------+\n";
+        }
+        std::cout << letter++; 
         for(short col{0}; col < SIZE;col++){
             if(col%3==0){
                 std::cout << "| ";
@@ -23,7 +26,7 @@ void print( short b[SIZE][SIZE] )
         std::cout << "|\n";
         
     }
-    std::cout << "+-------+-------+-------+\n";
+    std::cout << " +-------+-------+-------+\n";
 }
 
 bool validate(const vector<short> b){
@@ -65,18 +68,15 @@ bool is_valid( short b[SIZE][SIZE] )
     }
 
     // Testando cada quadrado
-    short aux{0};    
-    for(short i{0}; i < SIZE;i++){
+    for(short i{1}; i < 8;i+=3){
         t.clear();
-        for(short row{aux}; row<aux+3; row++){ 
-            for (short col{aux}; col<aux+3; col++){
-                t.push_back(b[row][col]);
+        for(short aRow{-1};aRow <= 1;aRow++){
+            for(short aCol{-1};aCol <= 1;aCol++){
+                t.push_back(b[i+aRow][i+aCol]);
             }
         }
         if(!validate(t)) return false;
-        aux+=3;
     }
-
     return true; 
 }
 
@@ -116,6 +116,8 @@ int main(void)
         { 2, 8, 7, 4, 1, 9, 6, 3, 5 },
         { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
+
+    // Problem
     short board4[SIZE][SIZE]={
         { 6, 2, 1, 9, 5, 7, 3, 4, 8 },
         { 2, 7, 4, 1, 9, 8, 6, 3, 5 },
@@ -126,7 +128,6 @@ int main(void)
         { 7, 3, 9, 2, 4, 1, 8, 5, 6 },
         { 9, 1, 5, 3, 7, 6, 2, 8, 4 },
         { 3, 5, 2, 8, 6, 4, 1, 7, 9 } };
-
 
     // Problem
     short board5[SIZE][SIZE]={
