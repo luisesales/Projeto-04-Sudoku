@@ -4,21 +4,21 @@
 
 int main(int argc, char* argv[])
 {   
-    SudokuGame sdkg;
+    sdkg::SudokuGame game;
 
     // Iniciar o Jogo com os parâmetros
-    sdkg.gameInit(argc,argv)
+    game.Init(argc,argv)
 
     // Display de Mensagem de Início
-    sdkg.welcomeMessage()
+    game.welcomeMessage()
 
-    while(!sdkg.gameOver()){
+    while(!game.Over()){
         // Ler comando escrito pelo usuário
-        sdkg.inputCommand()
+        game.inputCommand()
         // Atualizar o Jogo de acordo com o que é jogado
-        sdkg.update();
+        game.update();
         // Renderizar no console a visualização do usuário
-        sdkg.render();
+        game.render();
     }
     return 0
 }
