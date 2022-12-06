@@ -1,8 +1,0 @@
-Start(Initiates the menu with the current board on top and the 4 options in the menu with the instructions and the blank space for the messages the program returns);
-Game Init (initiates the game in the board recieved from the configs);
-Start New Game (Creates a new b oard and deletes the last used board);
-Check "c"(game pauses and checks if all the plays were right or wrong and colors then red in wrong and green in blue);
-Place "p"(add number in especified place);
-Remove "r"(removes number in especified place);
-Undo "u"(pops the pile of boards you have and prints the last board before the play);
-Quit "q"(leaves the current game and returns to the menu);
