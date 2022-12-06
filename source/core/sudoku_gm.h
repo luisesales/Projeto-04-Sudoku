@@ -110,10 +110,13 @@ namespace sdkg {
             SudokuGame();
             ~SudokuGame();
 
+            void initialize(int argc, char* argv[]);
+            void display_welcome();
             void usage(std::string)const;
             void update();
             void process_events();
             void render();
+            bool game_over();
 
     }; // SudokuGame class.
 }

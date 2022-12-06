@@ -45,19 +45,40 @@ namespace sdkg {
         }
         else if ( m_game_state == game_state_e::READING_MAIN_OPT )
         {
+
         }
         else if ( m_game_state == game_state_e::PLAYING_MODE )
         {
+
         }
         else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
         {
         }
     }
+    
+    void SudokuGame::initialize(int argc,char* argv[]){
+        // if(argc < 3){
+        //     for(size_t i{1}; i < argc;i++){
+        //         if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){
+        //             std::cout << "Usage: sudoku [<options>] [<input_puzzle_file>] \n   Game Options" << std::endl;
+        //             std::cout << "    --ncheck <num> Number of checks per game. Default = 3." << std::endl;
+        //             std::cout << "    --help         Print this help text." << std::endl;
+        //             return false;
+        //         }
+        //         if(strcmp)
+        //     };
+        // }
+        // else{
+        //     if(strcmp(argv[i],"--ncheck") == 0){
+        //             if()
+        //         }
+        // }
+    }
 
     void SudokuGame::update(){
     }
 
-    void SudokuGame::render(void) const{
+    void SudokuGame::render(void){
     }
 
 }

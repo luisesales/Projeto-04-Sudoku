@@ -1,6 +1,25 @@
 #ifndef SUDOKU_BOARD_H
 #define SUDOKU_BOARD_H
 
+
+#include <fstream>
+#include <thread>
+#include <memory>
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <algorithm>
+using std::fill_n;
+using std::all_of;
+#include <vector>
+using std::vector;
+#include <iterator>
+using std::back_inserter;
+#include <sstream>
+using std::ostringstream;
+#include <numeric>
+using std::accumulate;
+
 /*!
  *  In this header file we have two classes: SBoard and SudokuPlayerBoard.
  *
@@ -15,6 +34,7 @@
  */
 
 constexpr short SB_SIZE{9};
+bool validate(const vector<short>b);
 
 namespace sdkg {
 
@@ -24,10 +44,16 @@ namespace sdkg {
             short board[SB_SIZE*SB_SIZE];
         public:
         SBoard();
-        SBoard & operator=(const SBoard & target);
+        SBoard & operator=(SBoard & target);
         short & operator[](size_t pos) {
             return board[pos];
         }
+
+        /// Validator of a vector
+        
+
+        /// Validator of a hole board
+        bool is_valid( short b[SB_SIZE*SB_SIZE] );
 };
 
 
@@ -80,8 +106,20 @@ namespace sdkg {
             PlayerBoard( const PlayerBoard & ) = delete;
 
             //=== Access methods.
+            /// Method that returns the board correct solution
+            SBoard getSolutionBoard(void) const{return m_solution;}
+
+            ///Method that returns reference to current player board
+            SBoard getPlayerBoard(void) const{return m_player_moves;}
 
             //=== Modifiers methods.
+            ///Method that will print current board
+            void printBoard(void);
+
+            /// Method that updates player board
+            void updateBoard(const SBoard &sb);
+
+
     };
 }
 #endif
