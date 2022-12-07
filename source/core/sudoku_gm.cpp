@@ -57,6 +57,20 @@ namespace sdkg {
     }
     
     void SudokuGame::initialize(int argc,char* argv[]){
+        m_game_state = game_state_e::STARTING;
+        if(argc > 1){
+            for(size_t i{1}; i < argc;i++){
+                if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){
+                    SudokuGame::usage("");
+                }
+                else{ 
+                    if( strcmp(argv[i],"-c") == 0 && argc > 2 && isdigit(argv[i+1])){
+                        m_checks_left = argv[i+1];
+                    }
+                    // if(){}
+                }
+            }
+        }
         // if(argc < 3){
         //     for(size_t i{1}; i < argc;i++){
         //         if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){

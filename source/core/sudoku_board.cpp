@@ -10,7 +10,7 @@ namespace sdkg {
 
     SBoard& SBoard::operator=(SBoard & target){
         if(is_valid(target.board))
-        std::copy(target.board,target.board+SB_SIZE*SB_SIZE,&board);
+        for(short i{0}; i < SB_SIZE*SB_SIZE;i++) board[i] = target.board[i];
     }
 
     bool validate(const vector<short>b){
