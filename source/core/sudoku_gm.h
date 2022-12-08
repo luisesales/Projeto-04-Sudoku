@@ -33,7 +33,7 @@ namespace sdkg {
     
 
     /// Function to check if the input file is a directory or a file
-    bool isDirectory(char* name); 
+    bool isFile(char* name); 
 
 
     /// Function to clear terminal screen on all target operating systems

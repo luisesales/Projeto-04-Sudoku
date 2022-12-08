@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/eduardo.sales.090/Downloads/Sudoku/trabalho-04-sudoku-interativo-individual-luisesales/source/core/main.cpp" "CMakeFiles/sudoku.dir/core/main.cpp.o" "gcc" "CMakeFiles/sudoku.dir/core/main.cpp.o.d"
-  "/home/eduardo.sales.090/Downloads/Sudoku/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.cpp" "CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o" "gcc" "CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o.d"
-  "/home/eduardo.sales.090/Downloads/Sudoku/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.cpp" "CMakeFiles/sudoku.dir/core/sudoku_gm.cpp.o" "gcc" "CMakeFiles/sudoku.dir/core/sudoku_gm.cpp.o.d"
-  "/home/eduardo.sales.090/Downloads/Sudoku/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.cpp" "CMakeFiles/sudoku.dir/lib/messages.cpp.o" "gcc" "CMakeFiles/sudoku.dir/lib/messages.cpp.o.d"
+  "/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/source/core/main.cpp" "CMakeFiles/sudoku.dir/core/main.cpp.o" "gcc" "CMakeFiles/sudoku.dir/core/main.cpp.o.d"
+  "/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.cpp" "CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o" "gcc" "CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o.d"
+  "/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.cpp" "CMakeFiles/sudoku.dir/core/sudoku_gm.cpp.o" "gcc" "CMakeFiles/sudoku.dir/core/sudoku_gm.cpp.o.d"
+  "/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.cpp" "CMakeFiles/sudoku.dir/lib/messages.cpp.o" "gcc" "CMakeFiles/sudoku.dir/lib/messages.cpp.o.d"
   )
 
 # Targets to which this target links.

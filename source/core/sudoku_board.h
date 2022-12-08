@@ -3,6 +3,7 @@
 
 
 #include <fstream>
+#include <string>
 #include <thread>
 #include <memory>
 #include <iostream>
@@ -55,7 +56,7 @@ namespace sdkg {
 
         /// Validator of a hole board
         bool is_valid(const short b[SB_SIZE*SB_SIZE] );
-};
+    };
 
 
     /*!
@@ -103,8 +104,8 @@ namespace sdkg {
             PlayerBoard(){/*empty*/}
             PlayerBoard( SBoard &sb );
             ~PlayerBoard(){/*empty*/}
-            PlayerBoard & operator=( const PlayerBoard & ) = delete;
-            PlayerBoard( const PlayerBoard & ) = delete;
+            PlayerBoard & operator=( const PlayerBoard & target);
+            PlayerBoard( const PlayerBoard & target);
 
             //=== Access methods.
             /// Method that returns the board correct solution
@@ -118,7 +119,7 @@ namespace sdkg {
             void printBoard(void);
 
             /// Method that updates player board
-            void updateBoard(const SBoard &sb);
+            void updateBoard(SBoard &sb);
 
 
     };

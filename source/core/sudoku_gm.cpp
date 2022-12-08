@@ -27,13 +27,13 @@ namespace sdkg {
 #endif
 }
 
-    bool isDirectory(char* name) {
+    bool isFile(char* name) {
         if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0) {
             return true;
         }
 
         std::string strName = convertToString(name, 256);
-        if (strName.find(".") != std::string::npos) {
+        if (strName.find(".") == std::string::npos) {
             return false;
         }
 
@@ -49,7 +49,7 @@ namespace sdkg {
     /// Default constructor
     SudokuGame::SudokuGame(){
         m_opt.total_checks = 3; // Default value.
-        m_opt.input_filename = "../data/input.txt"; // Default value.
+        m_opt.input_filename = "./data/input.txt"; // Default value.
     }
 
     void SudokuGame::usage( std::string msg ) const{
@@ -88,67 +88,121 @@ namespace sdkg {
     }
     
     void SudokuGame::initialize(int argc,char* argv[]){
-        char * line{nullptr}; // Var where lines will be saved
+        std::stringstream ss;
+        string line; // Var where lines will be saved
         std::fstream bReader; // File Reader;
         short rAux{0}; // Auxiliar var for line reading 
         short cAux{0}; // Auxiliar var for col reading         
-        SBoard rBoard[SB_SIZE*SB_SIZE]; // Auxiliar var for reading board
+        SBoard rBoard; // Auxiliar var for reading board
         PlayerBoard pbAux; // Auxiliar player board for inserting in the vector
         // Initialize the game state
         m_game_state = game_state_e::STARTING;
 
         // Checks if there are more than 1 arguments on the input line
-        if(argc > 1){
-            for(size_t i{1}; i < argc;i++){
+        if(argc > 0){
+            for(int i{1}; i < argc;i++){
                 // Checks if the user needs for help
                 if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){
                     usage("");
                 }
                 else{ 
                     // Checks if the user inputs a pesonalized checks amount
-                    if( strcmp(argv[i],"-c") == 0 && argc > 2 && isdigit(*argv[i+1])){
+                    if( strcmp(argv[i],"-c") == 0 && argc > 1 && isdigit((*argv[i+1] - '0') + 1)){
                         m_opt.total_checks = (short) *argv[i+1];
                     
                     }
                     // Checks if the user inputs a personalized input file
-                     if(isDirectory(argv[i])){
-                        m_opt.input_filename = *argv[i];
-                     }
+                    if(isFile(argv[i])){
+                        m_opt.input_filename = argv[i];
+                    }
                 }
             }
         }
         // Read the File
         bReader.open(m_opt.input_filename);
         if(!bReader.is_open()){
-            std::cerr << "Erro ao abrir o arquivo" << m_opt.input_filename << std::endl;
+            std::cerr << "Erro ao abrir o arquivo " << m_opt.input_filename << std::endl;
         }
         else{
-            while(bReader.getline(line,27)){
-                if(line != nullptr){
-                    for(short i{0}; i < 27 && rAux < 9;i++){
+            // while(!bReader.eof()){
+            //     std::getline(bReader,line);
+            //     ss.clear();
+            //     ss << line;
+            //     if(line != ""){
+            //         //std::cout << line << "\n\n";
+            //         for(size_t i{0}; i < line.size() && rAux < 9;i++){
+            //             //std::cout << line[i] << "\n\n";
+            //             if(line[i] == ' '){
+            //                 cAux++;
+            //             }
+            //             else{
+            //                 size_t j{i};
+            //                 string num{""};
+            //                 while(line[j] != ' '){
+            //                     // std::cout << num << "\n";
+            //                     num+=line[j];
+            //                     j++;
+            //                 }              
+            //                 ss >> rBoard[rAux*SB_SIZE+cAux];
+            //                 std::cout << rBoard[rAux*SB_SIZE+cAux] << "\n";
+            //                 // rBoard[rAux*SB_SIZE+cAux] = std::stoi("1");
+            //                 cAux = 0;
+            //             }
+            //         }
+            //         rAux++;                    
+            //         cAux = 0;
+            //         pbAux.updateBoard(rBoard);
+            //         m_total_boards.push_back(pbAux);
+            //     }
+            //     else rAux = 0;
+            // }
+
+            while(!bReader.eof()){
+                std::getline(bReader,line);
+                ss.clear();
+                ss << line;
+                if(line != ""){
+                    //std::cout << line << "\n\n";
+                    for(size_t i{0}; i < line.size() && rAux < 9;i++){
+                        //std::cout << line[i] << "\n\n";
                         if(line[i] == ' '){
                             cAux++;
                         }
                         else{
-                            short j{i};
+                            size_t j{i};
                             string num{""};
                             while(line[j] != ' '){
+                                // std::cout << num << "\n";
                                 num+=line[j];
                                 j++;
-                            }
-                            rBoard[rAux*SB_SIZE+cAux] =  std::stoi(num.c_str(),nullptr,num.size());
-                            rAux++;
+                            }              
+                            ss >> rBoard[rAux*SB_SIZE+cAux];
+                            std::cout << rBoard[rAux*SB_SIZE+cAux] << "\n";
+                            // rBoard[rAux*SB_SIZE+cAux] = std::stoi("1");
                             cAux = 0;
                         }
                     }
-                    rAux = 0;
-                    pbAux.updateBoard(rBoard)
+                    rAux++;                    
+                    cAux = 0;
+                    pbAux.updateBoard(rBoard);
                     m_total_boards.push_back(pbAux);
                 }
+                else rAux = 0;
             }
             
         }
     }
+    SudokuGame::~SudokuGame(){}
+
+    PlayerBoard::PlayerBoard(const PlayerBoard & target){}
+
+    PlayerBoard & PlayerBoard::operator=(const PlayerBoard & target){
+        return *this;
+    }
+
+
+
+    void SudokuGame::display_welcome(){}
 
     void SudokuGame::update(){
     }
