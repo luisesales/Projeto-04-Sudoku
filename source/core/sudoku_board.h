@@ -54,7 +54,7 @@ namespace sdkg {
         
 
         /// Validator of a hole board
-        bool is_valid( short b[SB_SIZE*SB_SIZE] );
+        bool is_valid(const short b[SB_SIZE*SB_SIZE] );
 };
 
 
@@ -101,7 +101,7 @@ namespace sdkg {
         public:
             //=== Regular methods.
             PlayerBoard(){/*empty*/}
-            PlayerBoard( const SBoard &sb );
+            PlayerBoard( SBoard &sb );
             ~PlayerBoard(){/*empty*/}
             PlayerBoard & operator=( const PlayerBoard & ) = delete;
             PlayerBoard( const PlayerBoard & ) = delete;

@@ -88,8 +88,12 @@ namespace sdkg {
     }
     
     void SudokuGame::initialize(int argc,char* argv[]){
-
-        
+        char * line{nullptr}; // Var where lines will be saved
+        std::fstream bReader; // File Reader;
+        short rAux{0}; // Auxiliar var for line reading 
+        short cAux{0}; // Auxiliar var for col reading         
+        SBoard rBoard[SB_SIZE*SB_SIZE]; // Auxiliar var for reading board
+        PlayerBoard pbAux; // Auxiliar player board for inserting in the vector
         // Initialize the game state
         m_game_state = game_state_e::STARTING;
 
@@ -98,7 +102,7 @@ namespace sdkg {
             for(size_t i{1}; i < argc;i++){
                 // Checks if the user needs for help
                 if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){
-                    SudokuGame::usage("");
+                    usage("");
                 }
                 else{ 
                     // Checks if the user inputs a pesonalized checks amount
@@ -113,12 +117,36 @@ namespace sdkg {
                 }
             }
         }
-        struct dirent* pDirent;
-        DIR* pDir;
-        // Ensure we can open directory.
-        pDir = opendir(m_opt.input_filename.c_str());
-        if (pDir == NULL) {
-            std::cout << "Cannot open directory " << m_opt.input_filename << "\n";
+        // Read the File
+        bReader.open(m_opt.input_filename);
+        if(!bReader.is_open()){
+            std::cerr << "Erro ao abrir o arquivo" << m_opt.input_filename << std::endl;
+        }
+        else{
+            while(bReader.getline(line,27)){
+                if(line != nullptr){
+                    for(short i{0}; i < 27 && rAux < 9;i++){
+                        if(line[i] == ' '){
+                            cAux++;
+                        }
+                        else{
+                            short j{i};
+                            string num{""};
+                            while(line[j] != ' '){
+                                num+=line[j];
+                                j++;
+                            }
+                            rBoard[rAux*SB_SIZE+cAux] =  std::stoi(num.c_str(),nullptr,num.size());
+                            rAux++;
+                            cAux = 0;
+                        }
+                    }
+                    rAux = 0;
+                    pbAux.updateBoard(rBoard)
+                    m_total_boards.push_back(pbAux);
+                }
+            }
+            
         }
     }
 

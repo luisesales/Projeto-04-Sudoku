@@ -116,7 +116,8 @@ namespace sdkg {
             short m_checks_left;                    //!< Current # of checks user can request.
             main_menu_opt_e m_curr_main_menu_opt;   //!< Current main menu option.
             std::vector< Command > undo_log;        //!< Log of commands to support undoing.
-
+            std::vector <PlayerBoard> m_total_boards; //!< Vector that will have all boards contained in the input file and will cycle trough.
+            short m_board_position{0};                  //!< Flag that indicates which board the user is current playing on.
         public:
             SudokuGame();
             ~SudokuGame();

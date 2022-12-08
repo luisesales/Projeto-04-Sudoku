@@ -25,7 +25,7 @@ namespace sdkg {
             return std::all_of(numbers, numbers+SB_SIZE, [](bool e){return e==true;});
     }
 
-    bool is_valid( short b[SB_SIZE*SB_SIZE] )
+    bool is_valid(const short b[SB_SIZE*SB_SIZE] )
     {
         vector<short> t;
         bool numbers[SB_SIZE];
@@ -64,6 +64,19 @@ namespace sdkg {
         return true; 
     }
 
+    ///Ctro
+    PlayerBoard::PlayerBoard( SBoard &sb ){
+        m_solution = sb;
+        m_player_moves = sb;
+        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
+            if(sb[i] < 0) m_player_moves[i] = 0;                  
+        }
+        
+    }
+
+    void PlayerBoard::updateBoard( const SBoard &sb){
+        PlayerBoard(sb);
+    }
 
     void PlayerBoard::printBoard(){
         char letter = 65;
