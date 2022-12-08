@@ -19,6 +19,7 @@ using std::back_inserter;
 using std::ostringstream;
 #include <numeric>
 using std::accumulate;
+#include <dirent.h>
 
 /*!
  *  In this header file we have two classes: SBoard and SudokuPlayerBoard.

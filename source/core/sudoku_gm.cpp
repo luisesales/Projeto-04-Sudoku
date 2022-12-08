@@ -7,7 +7,38 @@
 
 
 namespace sdkg {
+    
+    std::string convertToString(char* a, int size) {
+    int i;
+    std::string s = "";
+    for (i = 0; i < size; i++) {
+        if (a[i] == '\0') {
+        return s;
+        }
+        s = s + a[i];
+    }
+    return s;
+    }
+    void clear_screen(){
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
+}
 
+    bool isDirectory(char* name) {
+        if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0) {
+            return true;
+        }
+
+        std::string strName = convertToString(name, 256);
+        if (strName.find(".") != std::string::npos) {
+            return false;
+        }
+
+        return true;
+    }
     /// Lambda expression that transform the string to lowercase.
     auto STR_LOWERCASE = [](const char * t)->std::string{
         std::string str{ t };
@@ -57,36 +88,38 @@ namespace sdkg {
     }
     
     void SudokuGame::initialize(int argc,char* argv[]){
+
+        
+        // Initialize the game state
         m_game_state = game_state_e::STARTING;
+
+        // Checks if there are more than 1 arguments on the input line
         if(argc > 1){
             for(size_t i{1}; i < argc;i++){
+                // Checks if the user needs for help
                 if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){
                     SudokuGame::usage("");
                 }
                 else{ 
-                    if( strcmp(argv[i],"-c") == 0 && argc > 2 && isdigit(argv[i+1])){
-                        m_checks_left = argv[i+1];
+                    // Checks if the user inputs a pesonalized checks amount
+                    if( strcmp(argv[i],"-c") == 0 && argc > 2 && isdigit(*argv[i+1])){
+                        m_opt.total_checks = (short) *argv[i+1];
+                    
                     }
-                    // if(){}
+                    // Checks if the user inputs a personalized input file
+                     if(isDirectory(argv[i])){
+                        m_opt.input_filename = *argv[i];
+                     }
                 }
             }
         }
-        // if(argc < 3){
-        //     for(size_t i{1}; i < argc;i++){
-        //         if(strcmp(argv[i],"-help") == 0 || strcmp(argv[i],"--help") == 0){
-        //             std::cout << "Usage: sudoku [<options>] [<input_puzzle_file>] \n   Game Options" << std::endl;
-        //             std::cout << "    --ncheck <num> Number of checks per game. Default = 3." << std::endl;
-        //             std::cout << "    --help         Print this help text." << std::endl;
-        //             return false;
-        //         }
-        //         if(strcmp)
-        //     };
-        // }
-        // else{
-        //     if(strcmp(argv[i],"--ncheck") == 0){
-        //             if()
-        //         }
-        // }
+        struct dirent* pDirent;
+        DIR* pDir;
+        // Ensure we can open directory.
+        pDir = opendir(m_opt.input_filename.c_str());
+        if (pDir == NULL) {
+            std::cout << "Cannot open directory " << m_opt.input_filename << "\n";
+        }
     }
 
     void SudokuGame::update(){

@@ -28,7 +28,18 @@ using std::accumulate;
 #include "sudoku_board.h"
 
 namespace sdkg {
+    /// Function to convert char* to std::string 
+    std::string convertToString(char* a, int size);
+    
 
+    /// Function to check if the input file is a directory or a file
+    bool isDirectory(char* name); 
+
+
+    /// Function to clear terminal screen on all target operating systems
+    void clear_screen();
+
+    
     /// Game class representing a Life Game simulation manager.
     class SudokuGame
     {
@@ -97,7 +108,7 @@ namespace sdkg {
 
             //=== Data members
 
-            Options m_opt;                          //!< Overall game Options to set up the game configuration.
+            Options m_opt;                    //!< Overall game Options to set up the game configuration.
             game_state_e m_game_state;              //!< Current game state.
             std::string m_curr_msg;                 //!< Current message to display on screen.
             Play m_curr_play;                       //!< Current user play.
