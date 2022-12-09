@@ -124,7 +124,7 @@ namespace sdkg {
             std::cerr << "Erro ao abrir o arquivo " << m_opt.input_filename << std::endl;
         }
         else{
-            std::cout << "Iniciando jogo, por favor aguarde."
+            MESSAGE("Processando arquivos, por favor aguarde");
             while(bReader >> rBoard[pAux]){
                 pAux++;
                 if(pAux == SB_SIZE*SB_SIZE){
@@ -149,7 +149,9 @@ namespace sdkg {
 
 
 
-    void SudokuGame::display_welcome(){}
+    void SudokuGame::display_welcome(){
+        
+    }
 
     void SudokuGame::update(){
     }
