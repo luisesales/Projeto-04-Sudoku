@@ -8,13 +8,12 @@ namespace sdkg {
         std::fill( &board[0], &board[SB_SIZE*SB_SIZE], 0 );
     }
 
-    SBoard& SBoard::operator=(SBoard & target){
-        if(is_valid(target.board))
+    SBoard& SBoard::operator=(SBoard & target){        
         for(short i{0}; i < SB_SIZE*SB_SIZE;i++) board[i] = target.board[i];
         return *this;
     }
 
-    bool validate(const vector<short>b){
+    bool SBoard::validate(const vector<short>b){
              bool numbers[SB_SIZE];
             std::fill(numbers, numbers+SB_SIZE, false);
             for(auto x : b){
@@ -26,7 +25,7 @@ namespace sdkg {
             return std::all_of(numbers, numbers+SB_SIZE, [](bool e){return e==true;});
     }
 
-    bool SBoard::is_valid(const short b[SB_SIZE*SB_SIZE] )
+    bool SBoard::is_valid(const short b[SB_SIZE*SB_SIZE])
     {
         vector<short> t;
         bool numbers[SB_SIZE];
@@ -38,7 +37,7 @@ namespace sdkg {
             for (short col{0}; col<SB_SIZE; col++){
                 t.push_back(b[row*SB_SIZE+col]);
             }
-            if(!validate(t))return false;
+            if(!SBoard::validate(t))return false;
             
         }
 
@@ -48,7 +47,7 @@ namespace sdkg {
             for (short row{0}; row<SB_SIZE; row++){
                 t.push_back(b[row*SB_SIZE+col]);
             }
-            if(!validate(t)) return false;
+            if(!SBoard::validate(t)) return false;
             
         }
 
@@ -60,7 +59,7 @@ namespace sdkg {
                     t.push_back(b[(i+aRow)*SB_SIZE+(i+aCol)]);
                 }
             }
-            if(!validate(t)) return false;
+            if(!SBoard::validate(t)) return false;
         }
         return true; 
     }
@@ -75,10 +74,10 @@ namespace sdkg {
     }
 
     void PlayerBoard::updateBoard(SBoard &sb){
-        m_solution = sb;
-        m_player_moves = sb;
         for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
-            if(sb[i] < 0) m_player_moves[i] = 0;                  
+            m_solution[i] = sb[i];
+            if(sb[i] < 0) m_player_moves[i] = 0;  
+            else m_player_moves[i] =sb[i];                
         }
     }
 

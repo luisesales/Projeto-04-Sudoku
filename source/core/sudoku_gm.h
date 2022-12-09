@@ -120,7 +120,7 @@ namespace sdkg {
             short m_board_position{0};                  //!< Flag that indicates which board the user is current playing on.
         public:
             SudokuGame();
-            ~SudokuGame();
+            ~SudokuGame(){/*empty*/};
 
             void initialize(int argc, char* argv[]);
             void display_welcome();

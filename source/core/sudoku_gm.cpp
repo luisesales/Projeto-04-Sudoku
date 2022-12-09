@@ -91,8 +91,8 @@ namespace sdkg {
         std::stringstream ss;
         string line; // Var where lines will be saved
         std::fstream bReader; // File Reader;
-        short rAux{0}; // Auxiliar var for line reading 
-        short cAux{0}; // Auxiliar var for col reading         
+        short pAux{0}; // Auxiliar var for number reading 
+        // short cAux{0}; // Auxiliar var for col reading         
         SBoard rBoard; // Auxiliar var for reading board
         PlayerBoard pbAux; // Auxiliar player board for inserting in the vector
         // Initialize the game state
@@ -124,77 +124,24 @@ namespace sdkg {
             std::cerr << "Erro ao abrir o arquivo " << m_opt.input_filename << std::endl;
         }
         else{
-            // while(!bReader.eof()){
-            //     std::getline(bReader,line);
-            //     ss.clear();
-            //     ss << line;
-            //     if(line != ""){
-            //         //std::cout << line << "\n\n";
-            //         for(size_t i{0}; i < line.size() && rAux < 9;i++){
-            //             //std::cout << line[i] << "\n\n";
-            //             if(line[i] == ' '){
-            //                 cAux++;
-            //             }
-            //             else{
-            //                 size_t j{i};
-            //                 string num{""};
-            //                 while(line[j] != ' '){
-            //                     // std::cout << num << "\n";
-            //                     num+=line[j];
-            //                     j++;
-            //                 }              
-            //                 ss >> rBoard[rAux*SB_SIZE+cAux];
-            //                 std::cout << rBoard[rAux*SB_SIZE+cAux] << "\n";
-            //                 // rBoard[rAux*SB_SIZE+cAux] = std::stoi("1");
-            //                 cAux = 0;
-            //             }
-            //         }
-            //         rAux++;                    
-            //         cAux = 0;
-            //         pbAux.updateBoard(rBoard);
-            //         m_total_boards.push_back(pbAux);
-            //     }
-            //     else rAux = 0;
-            // }
-
-            while(!bReader.eof()){
-                std::getline(bReader,line);
-                ss.clear();
-                ss << line;
-                if(line != ""){
-                    //std::cout << line << "\n\n";
-                    for(size_t i{0}; i < line.size() && rAux < 9;i++){
-                        //std::cout << line[i] << "\n\n";
-                        if(line[i] == ' '){
-                            cAux++;
-                        }
-                        else{
-                            size_t j{i};
-                            string num{""};
-                            while(line[j] != ' '){
-                                // std::cout << num << "\n";
-                                num+=line[j];
-                                j++;
-                            }              
-                            ss >> rBoard[rAux*SB_SIZE+cAux];
-                            std::cout << rBoard[rAux*SB_SIZE+cAux] << "\n";
-                            // rBoard[rAux*SB_SIZE+cAux] = std::stoi("1");
-                            cAux = 0;
-                        }
+            std::cout << "Iniciando jogo, por favor aguarde."
+            while(bReader >> rBoard[pAux]){
+                pAux++;
+                if(pAux == SB_SIZE*SB_SIZE){
+                     pAux = 0;       
+                    if(rBoard.is_valid(rBoard.get_board())){                                
+                        pbAux.updateBoard(rBoard);             
+                        m_total_boards.push_back(pbAux);   
                     }
-                    rAux++;                    
-                    cAux = 0;
-                    pbAux.updateBoard(rBoard);
-                    m_total_boards.push_back(pbAux);
                 }
-                else rAux = 0;
-            }
-            
+            }                 
         }
     }
-    SudokuGame::~SudokuGame(){}
 
-    PlayerBoard::PlayerBoard(const PlayerBoard & target){}
+
+
+    PlayerBoard::PlayerBoard(const PlayerBoard & target){
+    }
 
     PlayerBoard & PlayerBoard::operator=(const PlayerBoard & target){
         return *this;

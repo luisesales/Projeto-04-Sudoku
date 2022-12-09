@@ -36,7 +36,7 @@ using std::accumulate;
  */
 
 constexpr short SB_SIZE{9};
-bool validate(const vector<short>b);
+
 
 namespace sdkg {
 
@@ -46,16 +46,24 @@ namespace sdkg {
             short board[SB_SIZE*SB_SIZE];
         public:
         SBoard();
+        /// Updates board trough operator =
         SBoard & operator=(SBoard & target);
-        short & operator[](size_t pos) {
+
+        /// Returns element in determined position on board
+        short & operator[](short pos) {
             return board[pos];
         }
 
-        /// Validator of a vector
+        /// Returns the current board for acessing
+        const short* get_board(){
+            return board;
+        }
         
+        /// Validator of a vector
+        bool validate(const vector<short>b);
 
         /// Validator of a hole board
-        bool is_valid(const short b[SB_SIZE*SB_SIZE] );
+        bool is_valid(const short b[SB_SIZE*SB_SIZE]);
     };
 
 

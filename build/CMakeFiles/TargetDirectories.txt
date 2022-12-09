@@ -1,3 +1,3 @@
-/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/build/CMakeFiles/sudoku.dir
-/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/build/CMakeFiles/edit_cache.dir
-/home/petcc-05/Documentos/Monitoria LP1/luisesales/trabalho-04-sudoku-interativo-individual-luisesales/build/CMakeFiles/rebuild_cache.dir
+/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/build/CMakeFiles/rebuild_cache.dir
+/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/build/CMakeFiles/sudoku.dir
+/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/build/CMakeFiles/edit_cache.dir
