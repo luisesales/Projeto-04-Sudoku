@@ -148,9 +148,10 @@ namespace sdkg {
             }
         }
         // Read the File
+        MESSAGE("Opening input file ["+m_opt.input_filename+"]");
         bReader.open(m_opt.input_filename);
         if(!bReader.is_open()){
-            std::cerr << "Error on opening file: " << m_opt.input_filename << std::endl;
+           MESSAGE("Error on opening file: " + m_opt.input_filename);
         }
         else{
             MESSAGE("Processing Files, please wait");
@@ -166,7 +167,7 @@ namespace sdkg {
                     }
                 }
             }
-                        
+        MESSAGE("Finished reading input data file");                
         }
     }
 
@@ -182,7 +183,9 @@ namespace sdkg {
 
 
     void SudokuGame::display_welcome(){
-        
+        std::cout << "==================================================\n";
+        std::cout << "  Welcome to a temrinal version of Sudoku, v1.0\n  Copyright (C) 2020, Selan R. dos Santos\n";
+        std::cout << "==================================================\n";
     }
 
     void SudokuGame::update(){
