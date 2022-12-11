@@ -73,9 +73,39 @@ namespace sdkg {
             // Reading a simple enter from user.
             std::string line;
             std::getline(std::cin, line);
+            m_game_state = game_state_e::READING_MAIN_OPT;     
         }
         else if ( m_game_state == game_state_e::READING_MAIN_OPT )
         {
+            uint aux;
+            std::cin >> aux;
+            if(aux > 3 || aux < 0) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
+            else m_curr_main_menu_opt = main_menu_opt_e(aux);
+            switch (m_curr_main_menu_opt)
+            {
+            case main_menu_opt_e::PLAY:
+                m_game_state = game_state_e::PLAYING_MODE;
+                break;
+            
+            case main_menu_opt_e::NEW_GAME:
+                m_game_state = game_state_e::REQUESTING_NEW_GAME;
+                break;
+            
+            case main_menu_opt_e::QUIT:
+                m_game_state = game_state_e::QUITTING;
+                break;
+            
+            case main_menu_opt_e::HELP:
+                m_game_state = game_state_e::HELPING;
+                break;
+            
+            case main_menu_opt_e::INVALID:
+                m_curr_msg = "Please insert a Valid value from [1,4]";
+                break;
+
+            default:
+                break;
+            }
 
         }
         else if ( m_game_state == game_state_e::PLAYING_MODE )
@@ -92,7 +122,6 @@ namespace sdkg {
         string line; // Var where lines will be saved
         std::fstream bReader; // File Reader;
         short pAux{0}; // Auxiliar var for number reading 
-        // short cAux{0}; // Auxiliar var for col reading         
         SBoard rBoard; // Auxiliar var for reading board
         PlayerBoard pbAux; // Auxiliar player board for inserting in the vector
         // Initialize the game state
@@ -121,20 +150,23 @@ namespace sdkg {
         // Read the File
         bReader.open(m_opt.input_filename);
         if(!bReader.is_open()){
-            std::cerr << "Erro ao abrir o arquivo " << m_opt.input_filename << std::endl;
+            std::cerr << "Error on opening file: " << m_opt.input_filename << std::endl;
         }
         else{
-            MESSAGE("Processando arquivos, por favor aguarde");
+            MESSAGE("Processing Files, please wait");
             while(bReader >> rBoard[pAux]){
                 pAux++;
                 if(pAux == SB_SIZE*SB_SIZE){
                      pAux = 0;       
                     if(rBoard.is_valid(rBoard.get_board())){                                
-                        pbAux.updateBoard(rBoard);             
-                        m_total_boards.push_back(pbAux);   
+                        pbAux.updateBoard(rBoard);      
+                        // pbAux.printBoard();  
+                        // std::cout << m_total_boards.size() << std::endl;
+                        m_total_boards.push_back(rBoard);   
                     }
                 }
-            }                 
+            }
+                        
         }
     }
 
@@ -157,6 +189,25 @@ namespace sdkg {
     }
 
     void SudokuGame::render(void){
+        switch (m_game_state)
+            {
+            case game_state_e::READING_MAIN_OPT:
+                clear_screen();
+                std::cout << "|--------[ MAIN SCREEN ]--------|\n";
+                // std::cout << m_total_boards.size() << std::endl;                
+                m_total_boards[m_board_position].printBoard();
+                std::cout << "MSG : [" << m_curr_msg << "]\n\n";
+                std::cout << "1-Play  2-New Game  3-Quit  4-Help\nSelect Option [1,4] > ";
+            break;
+                
+        default:
+            break;
+        }
+        
     }
 
+
+    bool SudokuGame::game_over(){
+        return false;
+    }
 }

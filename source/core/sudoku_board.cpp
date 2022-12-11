@@ -83,22 +83,23 @@ namespace sdkg {
 
     void PlayerBoard::printBoard(){
         char letter = 65;
-        std::cout << "   1 2 3   4 5 6   7 8 9\n";  
+        std::cout << "      1 2 3   4 5 6   7 8 9\n";  
         for(short row{0}; row < SB_SIZE;row++){  
             if(row%3==0){
-                std::cout << " +-------+-------+-------+\n";
+                std::cout << "    +-------+-------+-------+\n";
             }
-            std::cout << letter++; 
+            std::cout << "   " << letter++; 
             for(short col{0}; col < SB_SIZE;col++){
                 if(col%3==0){
                     std::cout << "| ";
                 }
-                std::cout<< m_player_moves[row*SB_SIZE+col] << " ";
+                if(m_player_moves[row*SB_SIZE+col] != 0) std::cout<< m_player_moves[row*SB_SIZE+col] << " ";
+                else std::cout << "  "; 
             }
             std::cout << "|\n";
             
         }
-        std::cout << " +-------+-------+-------+\n";
+        std::cout << "    +-------+-------+-------+\n";
     }
 
 }
