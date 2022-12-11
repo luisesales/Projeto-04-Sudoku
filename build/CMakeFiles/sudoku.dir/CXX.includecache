@@ -41,6 +41,10 @@ numeric
 -
 dirent.h
 -
+../lib/messages.h
+/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.h
+../lib/text_color.h
+/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/text_color.h
 
 /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.cpp
 cassert
@@ -73,10 +77,6 @@ sstream
 -
 numeric
 -
-../lib/messages.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.h
-../lib/text_color.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/text_color.h
 sudoku_board.h
 /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.h
 

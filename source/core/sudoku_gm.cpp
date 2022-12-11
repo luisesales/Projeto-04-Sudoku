@@ -79,8 +79,11 @@ namespace sdkg {
         {
             uint aux;
             std::cin >> aux;
-            if(aux > 3 || aux < 0) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
-            else m_curr_main_menu_opt = main_menu_opt_e(aux);
+            if(aux > 4 || aux < 1) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
+            else{
+                aux--;
+                m_curr_main_menu_opt = main_menu_opt_e:aux;
+            } 
             switch (m_curr_main_menu_opt)
             {
             case main_menu_opt_e::PLAY:
@@ -163,7 +166,8 @@ namespace sdkg {
                         pbAux.updateBoard(rBoard);      
                         // pbAux.printBoard();  
                         // std::cout << m_total_boards.size() << std::endl;
-                        m_total_boards.push_back(rBoard);   
+                        m_total_boards.push_back(pbAux);  
+                        m_total_boards[0].printBoard(); 
                     }
                 }
             }
@@ -196,11 +200,19 @@ namespace sdkg {
             {
             case game_state_e::READING_MAIN_OPT:
                 clear_screen();
-                std::cout << "|--------[ MAIN SCREEN ]--------|\n";
+               std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);
                 // std::cout << m_total_boards.size() << std::endl;                
                 m_total_boards[m_board_position].printBoard();
-                std::cout << "MSG : [" << m_curr_msg << "]\n\n";
+                std::cout << Color::tcolor("MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
                 std::cout << "1-Play  2-New Game  3-Quit  4-Help\nSelect Option [1,4] > ";
+            break;
+            
+            case game_state_e::HELPING:
+                MESSAGE("----------------------------------------------------------------------\n");
+                MESSAGE("  The goal of Sudoku is to fill a 9x9 grid with numbers so that each row,\n  column nad section (nonet) contain all of the digits between 1 and 9.\n\n");
+                MESSAGE("  The Sudoku rules are:\n  1. Each row, column and nonet can contain each number (typically 1 to 9)\n     exactly once.");
+                MESSAGE("  2. The sum of all numbers in any nonet, row, or column must be equal to 45.\n");
+                MESSAGE("----------------------------------------------------------------------\n");
             break;
                 
         default:
@@ -211,6 +223,7 @@ namespace sdkg {
 
 
     bool SudokuGame::game_over(){
-        return false;
+        if(m_game_state == game_state_e::QUITTING) return true;
+        else return false;
     }
 }

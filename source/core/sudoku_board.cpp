@@ -64,12 +64,16 @@ namespace sdkg {
         return true; 
     }
 
+    main_menu_opt::main_menu_opt(uint & target){
+        this = target;
+    }
+
     ///Ctro
     PlayerBoard::PlayerBoard( SBoard &sb ){
-        m_solution = sb;
-        m_player_moves = sb;
-        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
-            if(sb[i] < 0) m_player_moves[i] = 0;                  
+       for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
+            m_solution[i] = sb[i];
+            if(sb[i] < 0) m_player_moves[i] = 0;  
+            else m_player_moves[i] = sb[i];                
         }
     }
 
@@ -77,18 +81,21 @@ namespace sdkg {
         for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
             m_solution[i] = sb[i];
             if(sb[i] < 0) m_player_moves[i] = 0;  
-            else m_player_moves[i] =sb[i];                
+            else m_player_moves[i] = sb[i];                
         }
     }
 
     void PlayerBoard::printBoard(){
         char letter = 65;
-        std::cout << "      1 2 3   4 5 6   7 8 9\n";  
+        string sLetter;
+        std::cout << Color::tcolor("      1 2 3   4 5 6   7 8 9\n",Color::BRIGHT_BLUE);  
         for(short row{0}; row < SB_SIZE;row++){  
             if(row%3==0){
                 std::cout << "    +-------+-------+-------+\n";
             }
-            std::cout << "   " << letter++; 
+            sLetter = letter;
+            std::cout << Color::tcolor("   " + sLetter + "",Color::BRIGHT_BLUE); 
+            letter+=1;
             for(short col{0}; col < SB_SIZE;col++){
                 if(col%3==0){
                     std::cout << "| ";

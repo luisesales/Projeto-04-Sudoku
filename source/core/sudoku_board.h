@@ -22,6 +22,9 @@ using std::ostringstream;
 using std::accumulate;
 #include <dirent.h>
 
+#include "../lib/messages.h"
+#include "../lib/text_color.h"
+
 /*!
  *  In this header file we have two classes: SBoard and SudokuPlayerBoard.
  *

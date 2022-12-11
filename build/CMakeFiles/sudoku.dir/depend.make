@@ -9,6 +9,8 @@ CMakeFiles/sudoku.dir/core/main.cpp.o: /home/luis/Documentos/Programas/LP1/Sudok
 
 CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.cpp
 CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.h
+CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.h
+CMakeFiles/sudoku.dir/core/sudoku_board.cpp.o: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/text_color.h
 
 CMakeFiles/sudoku.dir/core/sudoku_gm.cpp.o: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.h
 CMakeFiles/sudoku.dir/core/sudoku_gm.cpp.o: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.cpp

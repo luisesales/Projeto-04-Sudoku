@@ -23,8 +23,7 @@ using std::ostringstream;
 #include <numeric>
 using std::accumulate;
 
-#include "../lib/messages.h"
-#include "../lib/text_color.h"
+
 #include "sudoku_board.h"
 
 namespace sdkg {
@@ -83,6 +82,7 @@ namespace sdkg {
                 N_OPTIONS,     //!< Total number of options.
                 INVALID        //!< Invalid option.
             };
+            main_menu_opt_e();
 
             /// Represents a user move.
             struct Play {
