@@ -163,7 +163,8 @@ namespace sdkg {
         }
         else if ( m_game_state == game_state_e::PLAYING_MODE )
         {
-
+            std::string line;
+            std::getline(std::cin, line); 
         }
         else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
         {
@@ -208,29 +209,48 @@ namespace sdkg {
     }
 
     void SudokuGame::render(void){
-        switch (m_game_state)
-            {
-            case game_state_e::READING_MAIN_OPT:
-               clear_screen();
-               std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);
-                // std::cout << m_total_boards.size() << std::endl;                
-                m_total_boards[m_board_position].printBoard();
-                std::cout << Color::tcolor("MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
-                std::cout << "1-Play  2-New Game  3-Quit  4-Help\nSelect Option [1,4] > ";
-            break;
-            
-            case game_state_e::HELPING:
-                clear_screen();
-                std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
-                std::cout << Color::tcolor("  The goal of Sudoku is to fill a 9x9 grid with numbers so that each row,\n  column nad section (nonet) contain all of the digits between 1 and 9.\n\n",Color::GREEN);
-                std::cout << Color::tcolor("  The Sudoku rules are:\n  1. Each row, column and nonet can contain each number (typically 1 to 9)\n     exactly once.\n",Color::GREEN);
-                std::cout << Color::tcolor("  2. The sum of all numbers in any nonet, row, or column must be equal to 45.\n",Color::GREEN);
-                std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
-            break;
-                
-        default:
-            break;
+        if(m_game_state == game_state_e::READING_MAIN_OPT || 
+           m_game_state == game_state_e::REQUESTING_NEW_GAME || 
+           m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH ||
+           m_game_state == game_state_e::FINISHED_PUZZLE)
+        {
+            clear_screen();
+            std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);
+            // std::cout << m_total_boards.size() << std::endl;                
+            m_total_boards[m_board_position].printBoard();
+            std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
+            std::cout << "  1-Play  2-New Game  3-Quit  4-Help\n  Select Option [1,4] > ";
         }
+        
+    else if(m_game_state == game_state_e::HELPING){
+            clear_screen();
+            std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
+            std::cout << Color::tcolor("  The goal of Sudoku is to fill a 9x9 grid with numbers so that each row,\n  column nad section (nonet) contain all of the digits between 1 and 9.\n\n",Color::GREEN);
+            std::cout << Color::tcolor("  The Sudoku rules are:\n  1. Each row, column and nonet can contain each number (typically 1 to 9)\n     exactly once.\n",Color::GREEN);
+            std::cout << Color::tcolor("  2. The sum of all numbers in any nonet, row, or column must be equal to 45.\n",Color::GREEN);
+            std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
+        }
+
+    // else if(m_game_state == game_state_e::QUITTING){}        
+
+    else if(m_game_state == game_state_e::PLAYING_MODE){
+            std::string checks = std::to_string(m_opt.total_checks);
+            clear_screen();
+            std::cout << Color::tcolor("|--------[ ACTION MODE ]--------|\n",Color::BRIGHT_BLUE);
+            m_total_boards[m_board_position].printBoard();
+            std::cout << Color::tcolor("  Checks Left: [" + checks + "]\n",Color::BRIGHT_YELLOW);
+            std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
+            std::cout << Color::tcolor("Comands Syntax:\n  'enter' (without typping anything)  -> go back to previous menu.\n",Color::GREEN);
+            std::cout << Color::tcolor("  'p' <row> <col> <number> + 'enter'  -> place <number> on board at the location (<row>, <col>).\n",Color::GREEN);
+            std::cout << Color::tcolor("  'r' <row> <col> + 'enter'           -> remove on board at the location (<row>, <col>).\n",Color::GREEN);
+            std::cout << Color::tcolor("  'c' + 'enter'                       -> check which moves made are correct.\n",Color::GREEN);
+            std::cout << Color::tcolor("  'u' + 'enter'                       -> undo last play.\n",Color::GREEN);
+            std::cout << Color::tcolor("  <col>, <number> must be in range [1,9].\n",Color::GREEN);
+            std::cout << Color::tcolor("  <rol> must be a lowercase or uppercase letter in range [A,I].\n\n",Color::GREEN);
+            std::cout << Color::tcolor("Enter Command > ",Color::BRIGHT_YELLOW);
+            
+        }
+
         
     }
 
