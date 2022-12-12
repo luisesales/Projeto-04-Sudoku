@@ -82,7 +82,6 @@ namespace sdkg {
                 N_OPTIONS,     //!< Total number of options.
                 INVALID        //!< Invalid option.
             };
-            main_menu_opt_e();
 
             /// Represents a user move.
             struct Play {
@@ -106,7 +105,7 @@ namespace sdkg {
             };
 
 
-            //=== Data members
+            //=== Data members  
 
             Options m_opt;                    //!< Overall game Options to set up the game configuration.
             game_state_e m_game_state;              //!< Current game state.
@@ -121,6 +120,8 @@ namespace sdkg {
         public:
             SudokuGame();
             ~SudokuGame(){/*empty*/};
+
+            main_menu_opt_e getOption(short aux);
 
             void initialize(int argc, char* argv[]);
             void display_welcome();

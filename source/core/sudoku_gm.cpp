@@ -64,61 +64,7 @@ namespace sdkg {
         exit( msg != "" ? 1 : 0 );
     }
 
-    void SudokuGame::process_events(){
-        if ( m_game_state == game_state_e::STARTING or
-             m_game_state == game_state_e::HELPING  or
-             m_game_state == game_state_e::CHECKING_MOVES or
-             m_game_state == game_state_e::FINISHED_PUZZLE )
-        {
-            // Reading a simple enter from user.
-            std::string line;
-            std::getline(std::cin, line);
-            m_game_state = game_state_e::READING_MAIN_OPT;     
-        }
-        else if ( m_game_state == game_state_e::READING_MAIN_OPT )
-        {
-            uint aux;
-            std::cin >> aux;
-            if(aux > 4 || aux < 1) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
-            else{
-                aux--;
-                m_curr_main_menu_opt = main_menu_opt_e:aux;
-            } 
-            switch (m_curr_main_menu_opt)
-            {
-            case main_menu_opt_e::PLAY:
-                m_game_state = game_state_e::PLAYING_MODE;
-                break;
-            
-            case main_menu_opt_e::NEW_GAME:
-                m_game_state = game_state_e::REQUESTING_NEW_GAME;
-                break;
-            
-            case main_menu_opt_e::QUIT:
-                m_game_state = game_state_e::QUITTING;
-                break;
-            
-            case main_menu_opt_e::HELP:
-                m_game_state = game_state_e::HELPING;
-                break;
-            
-            case main_menu_opt_e::INVALID:
-                m_curr_msg = "Please insert a Valid value from [1,4]";
-                break;
-
-            default:
-                break;
-            }
-
-        }
-        else if ( m_game_state == game_state_e::PLAYING_MODE )
-        {
-
-        }
-        else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
-        {
-        }
-    }
+    
     
     void SudokuGame::initialize(int argc,char* argv[]){
         std::stringstream ss;
@@ -167,11 +113,11 @@ namespace sdkg {
                         // pbAux.printBoard();  
                         // std::cout << m_total_boards.size() << std::endl;
                         m_total_boards.push_back(pbAux);  
-                        m_total_boards[0].printBoard(); 
+                        // m_total_boards[0].printBoard(); 
                     }
                 }
             }
-        MESSAGE("Finished reading input data file");                
+        MESSAGE("Finished reading input data file");            
         }
     }
 
@@ -185,21 +131,87 @@ namespace sdkg {
     }
 
 
-
     void SudokuGame::display_welcome(){
         std::cout << "==================================================\n";
-        std::cout << "  Welcome to a temrinal version of Sudoku, v1.0\n  Copyright (C) 2020, Selan R. dos Santos\n";
+        std::cout << "  Welcome to a terminal version of Sudoku, v1.0\n  Copyright (C) 2020, Selan R. dos Santos\n";
         std::cout << "==================================================\n";
     }
 
+    void SudokuGame::process_events(){
+        if ( m_game_state == game_state_e::STARTING or
+             m_game_state == game_state_e::HELPING  or
+             m_game_state == game_state_e::CHECKING_MOVES or
+             m_game_state == game_state_e::FINISHED_PUZZLE )
+        {
+            // Reading a simple enter from user.
+            std::string line;
+            std::getline(std::cin, line);         
+        }
+        else if ( m_game_state == game_state_e::READING_MAIN_OPT )
+        {
+            uint aux;
+            std::cin >> aux;
+            std::string line;
+            std::getline(std::cin, line); 
+            if(aux > 4 || aux < 1) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
+            else{
+                aux--;
+                m_curr_main_menu_opt = main_menu_opt_e(aux);
+            } 
+            
+
+        }
+        else if ( m_game_state == game_state_e::PLAYING_MODE )
+        {
+
+        }
+        else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
+        {
+        }
+    }
+
     void SudokuGame::update(){
+        if ( m_game_state == game_state_e::STARTING or
+             m_game_state == game_state_e::HELPING  or
+             m_game_state == game_state_e::CHECKING_MOVES or
+             m_game_state == game_state_e::FINISHED_PUZZLE )
+        {
+            m_game_state = game_state_e::READING_MAIN_OPT;
+        }
+        else if(m_game_state == game_state_e::READING_MAIN_OPT){
+            switch (m_curr_main_menu_opt)
+            {
+            case main_menu_opt_e::PLAY:            
+                m_game_state = game_state_e::PLAYING_MODE;
+                break;
+            
+            case main_menu_opt_e::NEW_GAME:
+                m_game_state = game_state_e::REQUESTING_NEW_GAME;
+                break;
+            
+            case main_menu_opt_e::QUIT:            
+                m_game_state = game_state_e::QUITTING;
+                break;
+            
+            case main_menu_opt_e::HELP:                
+                m_game_state = game_state_e::HELPING;
+                break;
+            
+            case main_menu_opt_e::INVALID:
+                m_curr_msg = "Please insert a Valid value from [1,4]";
+                break;
+
+            default:
+                break;
+            }
+        }
     }
 
     void SudokuGame::render(void){
         switch (m_game_state)
             {
             case game_state_e::READING_MAIN_OPT:
-                clear_screen();
+               clear_screen();
                std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);
                 // std::cout << m_total_boards.size() << std::endl;                
                 m_total_boards[m_board_position].printBoard();
@@ -208,11 +220,12 @@ namespace sdkg {
             break;
             
             case game_state_e::HELPING:
-                MESSAGE("----------------------------------------------------------------------\n");
-                MESSAGE("  The goal of Sudoku is to fill a 9x9 grid with numbers so that each row,\n  column nad section (nonet) contain all of the digits between 1 and 9.\n\n");
-                MESSAGE("  The Sudoku rules are:\n  1. Each row, column and nonet can contain each number (typically 1 to 9)\n     exactly once.");
-                MESSAGE("  2. The sum of all numbers in any nonet, row, or column must be equal to 45.\n");
-                MESSAGE("----------------------------------------------------------------------\n");
+                clear_screen();
+                std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
+                std::cout << Color::tcolor("  The goal of Sudoku is to fill a 9x9 grid with numbers so that each row,\n  column nad section (nonet) contain all of the digits between 1 and 9.\n\n",Color::GREEN);
+                std::cout << Color::tcolor("  The Sudoku rules are:\n  1. Each row, column and nonet can contain each number (typically 1 to 9)\n     exactly once.\n",Color::GREEN);
+                std::cout << Color::tcolor("  2. The sum of all numbers in any nonet, row, or column must be equal to 45.\n",Color::GREEN);
+                std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
             break;
                 
         default:

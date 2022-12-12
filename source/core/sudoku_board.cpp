@@ -64,10 +64,6 @@ namespace sdkg {
         return true; 
     }
 
-    main_menu_opt::main_menu_opt(uint & target){
-        this = target;
-    }
-
     ///Ctro
     PlayerBoard::PlayerBoard( SBoard &sb ){
        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
