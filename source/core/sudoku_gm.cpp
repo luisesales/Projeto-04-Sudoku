@@ -66,8 +66,7 @@ namespace sdkg {
 
     
     
-    void SudokuGame::initialize(int argc,char* argv[]){
-        std::stringstream ss;
+    void SudokuGame::initialize(int argc,char* argv[]){        
         string line; // Var where lines will be saved
         std::fstream bReader; // File Reader;
         short pAux{0}; // Auxiliar var for number reading 
@@ -174,7 +173,6 @@ namespace sdkg {
     void SudokuGame::update(){
         if ( m_game_state == game_state_e::STARTING or
              m_game_state == game_state_e::HELPING  or
-             m_game_state == game_state_e::CHECKING_MOVES or
              m_game_state == game_state_e::FINISHED_PUZZLE )
         {
             m_game_state = game_state_e::READING_MAIN_OPT;
@@ -256,7 +254,6 @@ namespace sdkg {
 
 
     bool SudokuGame::game_over(){
-        if(m_game_state == game_state_e::QUITTING) return true;
-        else return false;
+        return m_game_state == game_state_e::QUITTING;
     }
 }
