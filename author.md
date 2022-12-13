@@ -1,11 +1,13 @@
 # Introduction
 
-<!-- TODO -->
+Sudoku é um jogo de tabuleiro clássico cujo objetivo é completar o tabuleiro preenchendo-o com números de 1 à 9 de forma que toda linha, coluna e sessão (noneto) possua todos os números uma vez pelo menos.
+
 Breve descrição do projeto.
 
 # Author(s)
 
-<!-- TODO -->
+Luís Eduardo de Oliveira Sales
+duduosales@hotmail.com
 Indique o nome do autor e email.
 
 # Problems found or limitations
@@ -22,17 +24,17 @@ Preencha os itens que você implementou, indicando qual a nota esperada para cad
 
 Item     | Valor máximo   | Valor esperado
 -------- | :-----: | :-----:
-Trata corretamente os argumentos de linha de comando | 5 pts | ??
-Lê e armazena os vários puzzles contidos em um arquivo de entrada |5 pts| ??
-Exibe corretamente a tela principal com o menu de ações |5 pts| ??
-Permite a escolha dos vários puzzles lidos do arquivo  |5 pts| ??
+Trata corretamente os argumentos de linha de comando | 5 pts | 5
+Lê e armazena os vários puzzles contidos em um arquivo de entrada |5 pts| 5
+Exibe corretamente a tela principal com o menu de ações |5 pts| 5
+Permite a escolha dos vários puzzles lidos do arquivo  |5 pts| 5
 Executa corretamente a ação de posicionamento de dígitos no tabuleiro (comando posicionar) identificação jogadas inválidas |11 pts| ??
 Executa corretamente a remoção de dígitos posicionados pelo jogador (comando remover) |10 pts| ??
 Executa corretamente o comando de desfazer ação |12 pts| ??
 Executa corretamente o comando de verificação do tabuleiro |12 pts| ??
-Exibe as regras do jogo quando solicitado |5 pts| ??
+Exibe as regras do jogo quando solicitado |5 pts| 5
 Indica corretamente se uma partida finalizada foi vencida ou perdida |5 pts| ??
-Apresenta uma interface com usuário igual ou similar a que foi especificada nesse documento |5 pts| ??
+Apresenta uma interface com usuário igual ou similar a que foi especificada nesse documento |5 pts| 5
 Apresenta uma validação robusta dos comandos textuais de ação fornecidos pelo usuário |5 pts| ??
 Exibe corretamente a lista de dígitos disponíveis, conforme o progresso do jogo |5 pts| ??
 Apresenta as indicações com `setas` da coordenada da célula que foi alvo da última ação |5 pts| ??
