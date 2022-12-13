@@ -113,7 +113,7 @@ namespace sdkg {
         public:
             //=== Regular methods.
             PlayerBoard(){/*empty*/}
-            PlayerBoard(const SBoard &sb );
+            PlayerBoard(SBoard &sb );
             ~PlayerBoard(){/*empty*/}
             PlayerBoard & operator=(const PlayerBoard & target);
             PlayerBoard(const PlayerBoard & target);

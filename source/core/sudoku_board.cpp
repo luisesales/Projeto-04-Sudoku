@@ -64,17 +64,19 @@ namespace sdkg {
         return true; 
     }
 
-    // PlayerBoard::PlayerBoard(const PlayerBoard & target){
-    //     this->updateBoard(target.m_solution);
-    // }
+    PlayerBoard::PlayerBoard(const PlayerBoard & target){
+        SBoard aux = target.getSolutionBoard();
+        this->updateBoard(aux);
+    }
 
-    // PlayerBoard & PlayerBoard::operator=(const PlayerBoard & target){     
-    //     this->updateBoard(target.m_solution);   
-    //     return *this;
-    // }
+    PlayerBoard & PlayerBoard::operator=(const PlayerBoard & target){     
+        SBoard aux = target.getSolutionBoard();
+        this->updateBoard(aux);   
+        return *this;
+    }
 
     ///Ctro
-    PlayerBoard::PlayerBoard(const SBoard &sb ){
+    PlayerBoard::PlayerBoard(SBoard &sb ){
        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
             m_solution[i] = sb[i];
             if(sb[i] < 0) m_player_moves[i] = 0;  

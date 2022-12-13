@@ -84,9 +84,8 @@ namespace sdkg {
                 }
                 else{ 
                     // Checks if the user inputs a pesonalized checks amount
-                    if( strcmp(argv[i],"-c") == 0 && argc > 1 && isdigit((*argv[i+1] - '0') + 1)){
-                        m_opt.total_checks = (short) *argv[i+1];
-                    
+                    if( strcmp(argv[i],"-c") == 0 && argc > 1 && isdigit((*argv[i+1]) + 1)){                        
+                        m_opt.total_checks = *argv[i+1] - '0';                    
                     }
                     // Checks if the user inputs a personalized input file
                     if(isFile(argv[i])){
@@ -100,6 +99,7 @@ namespace sdkg {
         bReader.open(m_opt.input_filename);
         if(!bReader.is_open()){
            MESSAGE("Error on opening file: " + m_opt.input_filename);
+           exit(1);
         }
         else{
             MESSAGE("Processing Files, please wait");
@@ -107,12 +107,9 @@ namespace sdkg {
                 pAux++;
                 if(pAux == SB_SIZE*SB_SIZE){
                      pAux = 0;       
-                    if(rBoard.is_valid(rBoard.get_board())){                                                                                      
-                        // std::cout << m_total_boards.size() << std::endl;
-                        pbAux.updateBoard(rBoard);
-                        pbAux.printBoard(false);  
-                        m_total_boards.push_back(pbAux);  
-                        // m_total_boards[0].printBoard(); 
+                    if(rBoard.is_valid(rBoard.get_board())){                                                                                                              
+                        pbAux.updateBoard(rBoard);                        
+                        m_total_boards.push_back(pbAux);                          
                     }
                 }
             }
@@ -141,6 +138,7 @@ namespace sdkg {
         }
         else if ( m_game_state == game_state_e::READING_MAIN_OPT )
         {
+            // Reading Option Chosen
             uint aux;
             std::cin >> aux;
             std::string line;
@@ -155,11 +153,15 @@ namespace sdkg {
         }
         else if ( m_game_state == game_state_e::PLAYING_MODE )
         {
+            // Reading Command Chosen
             std::string line;
             std::getline(std::cin, line); 
         }
         else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
         {
+        }
+        else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
+            
         }
     }
 
@@ -171,24 +173,34 @@ namespace sdkg {
             m_game_state = game_state_e::READING_MAIN_OPT;
         }
         else if(m_game_state == game_state_e::READING_MAIN_OPT){
+            // Updating Current Message to Default Value
+            m_curr_msg = "";
+
+            // Updating Program Based on Main Menu Option Chosen
             switch (m_curr_main_menu_opt)
             {
-            case main_menu_opt_e::PLAY:            
+            // Option Chosen = Play
+            case main_menu_opt_e::PLAY:  
+                          
                 m_game_state = game_state_e::PLAYING_MODE;
                 break;
             
+            // Option Chosen = New Game
             case main_menu_opt_e::NEW_GAME:
-                m_game_state = game_state_e::REQUESTING_NEW_GAME;
+                m_game_state = game_state_e::REQUESTING_NEW_GAME;                
                 break;
             
+            // Option Chosen = Quit
             case main_menu_opt_e::QUIT:            
                 m_game_state = game_state_e::QUITTING;
                 break;
             
+            // Option Chosen = Help
             case main_menu_opt_e::HELP:                
                 m_game_state = game_state_e::HELPING;
                 break;
             
+            // Option Chosen = Invalid
             case main_menu_opt_e::INVALID:
                 m_curr_msg = "Please insert a Valid value from [1,4]";
                 break;
@@ -197,23 +209,28 @@ namespace sdkg {
                 break;
             }
         }
+        else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
+            // Selecting a New Board from Read File
+            m_game_state = game_state_e::READING_MAIN_OPT;
+            m_board_position = (m_board_position+1)%m_total_boards.size();            
+        }
     }
 
     void SudokuGame::render(void){
-        if(m_game_state == game_state_e::READING_MAIN_OPT || 
-           m_game_state == game_state_e::REQUESTING_NEW_GAME || 
+        if(m_game_state == game_state_e::READING_MAIN_OPT ||            
            m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH ||
            m_game_state == game_state_e::FINISHED_PUZZLE)
         {
-            clear_screen();
-            std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);
-            // std::cout << m_total_boards.size() << std::endl;                
+            // Printing Main Menu
+            clear_screen();                        
+            std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);                          
             m_total_boards[m_board_position].printBoard(false);
             std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
             std::cout << "  1-Play  2-New Game  3-Quit  4-Help\n  Select Option [1,4] > ";
         }
         
     else if(m_game_state == game_state_e::HELPING){
+            // Printing Main Menu Tutorial
             clear_screen();
             std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
             std::cout << Color::tcolor("  The goal of Sudoku is to fill a 9x9 grid with numbers so that each row,\n  column nad section (nonet) contain all of the digits between 1 and 9.\n\n",Color::GREEN);
@@ -224,13 +241,23 @@ namespace sdkg {
 
     // else if(m_game_state == game_state_e::QUITTING){}        
 
-    else if(m_game_state == game_state_e::PLAYING_MODE){
+    else if(m_game_state == game_state_e::PLAYING_MODE  || 
+            m_game_state == game_state_e::FINISHED_PUZZLE ||
+            m_game_state == game_state_e::CHECKING_MOVES)
+        {
+            // Printing Action Mode Board
             std::string checks = std::to_string(m_opt.total_checks);
             clear_screen();
             std::cout << Color::tcolor("|--------[ ACTION MODE ]--------|\n",Color::BRIGHT_BLUE);
-            m_total_boards[m_board_position].printBoard(false);
+            m_total_boards[m_board_position].printBoard(m_checking_board);
+            
+            // Printing Current Game Info
             std::cout << Color::tcolor("  Checks Left: [" + checks + "]\n",Color::BRIGHT_YELLOW);
-            std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
+            std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);     
+               
+        }
+    if(m_game_state == game_state_e::PLAYING_MODE){
+            // Printing Command Syntax
             std::cout << Color::tcolor("Comands Syntax:\n  'enter' (without typping anything)  -> go back to previous menu.\n",Color::GREEN);
             std::cout << Color::tcolor("  'p' <row> <col> <number> + 'enter'  -> place <number> on board at the location (<row>, <col>).\n",Color::GREEN);
             std::cout << Color::tcolor("  'r' <row> <col> + 'enter'           -> remove on board at the location (<row>, <col>).\n",Color::GREEN);
@@ -238,9 +265,10 @@ namespace sdkg {
             std::cout << Color::tcolor("  'u' + 'enter'                       -> undo last play.\n",Color::GREEN);
             std::cout << Color::tcolor("  <col>, <number> must be in range [1,9].\n",Color::GREEN);
             std::cout << Color::tcolor("  <rol> must be a lowercase or uppercase letter in range [A,I].\n\n",Color::GREEN);
+
+            // Printing Command Input Line
             std::cout << Color::tcolor("Enter Command > ",Color::BRIGHT_YELLOW);
-            
-        }
+    }
 
         
     }

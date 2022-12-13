@@ -40,5 +40,10 @@ Apresenta um fluxo correto entre telas, com opção de retomar uma partida suspe
 
 # Compiling and Runnig
 
-<!-- TODO -->
+mkdir build
+cmake -S source -B build
+cmake --build build
+./build/sudoku <options>
+./build/sudoku <-help||--help> for usage
+
 Indique aqui como compilar e executar seu programa.
