@@ -302,6 +302,7 @@ namespace sdkg {
         { 
             m_checking_board = false;
             m_opt.total_checks--;
+            m_game_state = game_state_e::PLAYING_MODE;
         }
     }
 

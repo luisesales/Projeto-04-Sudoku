@@ -28,10 +28,10 @@ Trata corretamente os argumentos de linha de comando | 5 pts | 5
 Lê e armazena os vários puzzles contidos em um arquivo de entrada |5 pts| 5
 Exibe corretamente a tela principal com o menu de ações |5 pts| 5
 Permite a escolha dos vários puzzles lidos do arquivo  |5 pts| 5
-Executa corretamente a ação de posicionamento de dígitos no tabuleiro (comando posicionar) identificação jogadas inválidas |11 pts| ??
-Executa corretamente a remoção de dígitos posicionados pelo jogador (comando remover) |10 pts| ??
+Executa corretamente a ação de posicionamento de dígitos no tabuleiro (comando posicionar) identificação jogadas inválidas |11 pts| 11
+Executa corretamente a remoção de dígitos posicionados pelo jogador (comando remover) |10 pts| 10
 Executa corretamente o comando de desfazer ação |12 pts| ??
-Executa corretamente o comando de verificação do tabuleiro |12 pts| ??
+Executa corretamente o comando de verificação do tabuleiro |12 pts| 12
 Exibe as regras do jogo quando solicitado |5 pts| 5
 Indica corretamente se uma partida finalizada foi vencida ou perdida |5 pts| ??
 Apresenta uma interface com usuário igual ou similar a que foi especificada nesse documento |5 pts| 5
