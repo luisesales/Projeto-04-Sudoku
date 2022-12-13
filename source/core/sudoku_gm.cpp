@@ -94,6 +94,8 @@ namespace sdkg {
                 }
             }
         }
+        m_checks_left = m_opt.total_checks;
+
         // Read the File
         MESSAGE("Opening input file ["+m_opt.input_filename+"]");
         bReader.open(m_opt.input_filename);
@@ -158,6 +160,12 @@ namespace sdkg {
         }
         else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
         {
+            short aux;
+            std::cin >> aux;
+            std::string line;
+            std::getline(std::cin, line);
+            if(aux > 1 || aux < 0) WARNING("Insert a Valid Value");
+            else m_quitting_match = aux;
         }
         else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
             
@@ -211,7 +219,8 @@ namespace sdkg {
         else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
             // Selecting a New Board from Read File
             m_game_state = game_state_e::READING_MAIN_OPT;
-            m_board_position = (m_board_position+1)%m_total_boards.size();            
+            m_board_position = (m_board_position+1)%m_total_boards.size();    
+            m_checks_left = m_opt.total_checks;        
         }
 
         else if(m_game_state == game_state_e::PLAYING_MODE){
@@ -285,7 +294,7 @@ namespace sdkg {
 
                 else if(m_command_line.find("c") != string::npos &&
                         m_command_line.size() == 1 &&
-                        m_opt.total_checks > 0)
+                        m_checks_left > 0)
                 {
                     m_game_state = game_state_e::CHECKING_MOVES;
                     m_checking_board = true;
@@ -301,8 +310,12 @@ namespace sdkg {
         else if(m_game_state == game_state_e::CHECKING_MOVES)
         { 
             m_checking_board = false;
-            m_opt.total_checks--;
+            m_checks_left--;
             m_game_state = game_state_e::PLAYING_MODE;
+        }
+        else if(m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH){
+            if(m_quitting_match) m_game_state = game_state_e::READING_MAIN_OPT;
+            else m_game_state = game_state_e::PLAYING_MODE;
         }
     }
 
@@ -329,14 +342,18 @@ namespace sdkg {
                 std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
         }
 
-        // else if(m_game_state == game_state_e::QUITTING){}        
+         else if(m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH){
+             std::cout << "==================================================\n";
+             std::cout << " Are you sure you want to return to the main menu?\n 1-Yes  0-No";
+             std::cout << "==================================================\n";
+         }        
 
         else if(m_game_state == game_state_e::PLAYING_MODE  || 
                 m_game_state == game_state_e::FINISHED_PUZZLE ||
                 m_game_state == game_state_e::CHECKING_MOVES)
             {
                 // Printing Action Mode Board
-                std::string checks = std::to_string(m_opt.total_checks);
+                std::string checks = std::to_string(m_checks_left);
                 clear_screen();
                 std::cout << Color::tcolor("|--------[ ACTION MODE ]--------|\n",Color::BRIGHT_BLUE);
                 m_total_boards[m_board_position].printBoard(m_checking_board);

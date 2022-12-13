@@ -111,7 +111,7 @@ namespace sdkg {
             game_state_e m_game_state;              //!< Current game state.
             std::string m_curr_msg;                 //!< Current message to display on screen.
             Play m_curr_play;                       //!< Current user play.
-            bool m_quitting_match;                  //!< Flag that indicates whether the user wants to end an ongoing game.
+            bool m_quitting_match{false};                  //!< Flag that indicates whether the user wants to end an ongoing game.
             bool m_checking_board{false};            //!< Flag that indicates whether the board will print a checked board or not
             short m_checks_left;                    //!< Current # of checks user can request.
             main_menu_opt_e m_curr_main_menu_opt;   //!< Current main menu option.
@@ -119,6 +119,7 @@ namespace sdkg {
             std::vector <PlayerBoard> m_total_boards; //!< Vector that will have all boards contained in the input file and will cycle trough.
             short m_board_position{0};                  //!< Flag that indicates which board the user is current playing on.
             std::string m_command_line;              //!< Current command line.
+
 
         public:
             SudokuGame();
