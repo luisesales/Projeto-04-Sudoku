@@ -132,6 +132,7 @@ namespace sdkg {
             /// Method that updates player board
             void updateBoard( SBoard &sb);
 
+            void updateBoardPotition(short & pos, short & value);
 
     };
 }

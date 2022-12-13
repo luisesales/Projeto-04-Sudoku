@@ -114,6 +114,7 @@ namespace sdkg {
                         if(aux == 1) std::cout << Color::tcolor(number+" ",Color::BRIGHT_GREEN);
                         else if(aux == 2) std::cout << Color::tcolor(number+" ",Color::BRIGHT_RED);
                         else if(aux == 3) std::cout << Color::tcolor(number+" ",Color::BRIGHT_YELLOW);
+                        else std::cout << number << " ";
                     }
                     else if(m_solution[row*SB_SIZE+col] > 0) std::cout << number << " ";
                     else std::cout << Color::tcolor(number+" ",Color::BRIGHT_BLUE);
@@ -124,6 +125,10 @@ namespace sdkg {
             
         }
         std::cout << "    +-------+-------+-------+\n";
+    }
+
+    void PlayerBoard::updateBoardPotition(short & pos, short & value){
+        m_player_moves[pos] = value;
     }
 
 }
