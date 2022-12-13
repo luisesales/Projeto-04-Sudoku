@@ -107,10 +107,10 @@ namespace sdkg {
                 pAux++;
                 if(pAux == SB_SIZE*SB_SIZE){
                      pAux = 0;       
-                    if(rBoard.is_valid(rBoard.get_board())){                                
-                        pbAux.updateBoard(rBoard);      
-                        // pbAux.printBoard();  
+                    if(rBoard.is_valid(rBoard.get_board())){                                                                                      
                         // std::cout << m_total_boards.size() << std::endl;
+                        pbAux.updateBoard(rBoard);
+                        pbAux.printBoard(false);  
                         m_total_boards.push_back(pbAux);  
                         // m_total_boards[0].printBoard(); 
                     }
@@ -120,14 +120,7 @@ namespace sdkg {
         }
     }
 
-
-
-    PlayerBoard::PlayerBoard(const PlayerBoard & target){
-    }
-
-    PlayerBoard & PlayerBoard::operator=(const PlayerBoard & target){
-        return *this;
-    }
+    
 
 
     void SudokuGame::display_welcome(){
@@ -215,7 +208,7 @@ namespace sdkg {
             clear_screen();
             std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);
             // std::cout << m_total_boards.size() << std::endl;                
-            m_total_boards[m_board_position].printBoard();
+            m_total_boards[m_board_position].printBoard(false);
             std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
             std::cout << "  1-Play  2-New Game  3-Quit  4-Help\n  Select Option [1,4] > ";
         }
@@ -235,7 +228,7 @@ namespace sdkg {
             std::string checks = std::to_string(m_opt.total_checks);
             clear_screen();
             std::cout << Color::tcolor("|--------[ ACTION MODE ]--------|\n",Color::BRIGHT_BLUE);
-            m_total_boards[m_board_position].printBoard();
+            m_total_boards[m_board_position].printBoard(false);
             std::cout << Color::tcolor("  Checks Left: [" + checks + "]\n",Color::BRIGHT_YELLOW);
             std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
             std::cout << Color::tcolor("Comands Syntax:\n  'enter' (without typping anything)  -> go back to previous menu.\n",Color::GREEN);

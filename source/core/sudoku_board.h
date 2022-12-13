@@ -113,10 +113,10 @@ namespace sdkg {
         public:
             //=== Regular methods.
             PlayerBoard(){/*empty*/}
-            PlayerBoard( SBoard &sb );
+            PlayerBoard(const SBoard &sb );
             ~PlayerBoard(){/*empty*/}
-            PlayerBoard & operator=( const PlayerBoard & target);
-            PlayerBoard( const PlayerBoard & target);
+            PlayerBoard & operator=(const PlayerBoard & target);
+            PlayerBoard(const PlayerBoard & target);
 
             //=== Access methods.
             /// Method that returns the board correct solution
@@ -127,10 +127,10 @@ namespace sdkg {
 
             //=== Modifiers methods.
             ///Method that will print current board
-            void printBoard(void);
+            void printBoard(bool checking);
 
             /// Method that updates player board
-            void updateBoard(SBoard &sb);
+            void updateBoard( SBoard &sb);
 
 
     };

@@ -64,8 +64,17 @@ namespace sdkg {
         return true; 
     }
 
+    // PlayerBoard::PlayerBoard(const PlayerBoard & target){
+    //     this->updateBoard(target.m_solution);
+    // }
+
+    // PlayerBoard & PlayerBoard::operator=(const PlayerBoard & target){     
+    //     this->updateBoard(target.m_solution);   
+    //     return *this;
+    // }
+
     ///Ctro
-    PlayerBoard::PlayerBoard( SBoard &sb ){
+    PlayerBoard::PlayerBoard(const SBoard &sb ){
        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
             m_solution[i] = sb[i];
             if(sb[i] < 0) m_player_moves[i] = 0;  
@@ -81,9 +90,9 @@ namespace sdkg {
         }
     }
 
-    void PlayerBoard::printBoard(){
+    void PlayerBoard::printBoard(bool checking){
         char letter = 65;
-        string sLetter;
+        string sLetter; 
         std::cout << Color::tcolor("      1 2 3   4 5 6   7 8 9\n",Color::BRIGHT_BLUE);  
         for(short row{0}; row < SB_SIZE;row++){  
             if(row%3==0){
@@ -96,7 +105,17 @@ namespace sdkg {
                 if(col%3==0){
                     std::cout << "| ";
                 }
-                if(m_player_moves[row*SB_SIZE+col] != 0) std::cout<< m_player_moves[row*SB_SIZE+col] << " ";
+                if(m_player_moves[row*SB_SIZE+col] != 0){ 
+                    short aux = m_player_moves[row*SB_SIZE+col]/10;
+                    std::string number = std::to_string(m_player_moves[row*SB_SIZE+col]%10);
+                    if(checking){                        
+                        if(aux == 1) std::cout << Color::tcolor(number+" ",Color::BRIGHT_GREEN);
+                        else if(aux == 2) std::cout << Color::tcolor(number+" ",Color::BRIGHT_RED);
+                        else if(aux == 3) std::cout << Color::tcolor(number+" ",Color::BRIGHT_YELLOW);
+                    }
+                    else if(m_solution[row*SB_SIZE+col] > 0) std::cout << number << " ";
+                    else std::cout << Color::tcolor(number+" ",Color::BRIGHT_BLUE);
+                    }
                 else std::cout << "  "; 
             }
             std::cout << "|\n";
