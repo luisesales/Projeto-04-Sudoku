@@ -153,19 +153,11 @@ namespace sdkg {
             
 
         }
-        else if ( m_game_state == game_state_e::PLAYING_MODE )
+        else if ( m_game_state == game_state_e::PLAYING_MODE ||
+                  m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH)
         {
             // Reading Command Chosen            
             std::getline(std::cin, m_command_line); 
-        }
-        else if ( m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH )
-        {
-            short aux;
-            std::cin >> aux;
-            std::string line;
-            std::getline(std::cin, line);
-            if(aux > 1 || aux < 0) WARNING("Insert a Valid Value");
-            else m_quitting_match = aux;
         }
         else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
             
@@ -194,7 +186,11 @@ namespace sdkg {
             
             // Option Chosen = New Game
             case main_menu_opt_e::NEW_GAME:
-                m_game_state = game_state_e::REQUESTING_NEW_GAME;                
+                if(m_progress){ 
+                    m_game_state = game_state_e::CONFIRMING_QUITTING_MATCH;
+                    m_curr_msg = "Are you sure you want to leave this game?";
+                }
+                else m_game_state = game_state_e::REQUESTING_NEW_GAME;                
                 break;
             
             // Option Chosen = Quit
@@ -219,8 +215,10 @@ namespace sdkg {
         else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
             // Selecting a New Board from Read File
             m_game_state = game_state_e::READING_MAIN_OPT;
+            m_total_boards[m_board_position].resetBoard();
             m_board_position = (m_board_position+1)%m_total_boards.size();    
             m_checks_left = m_opt.total_checks;        
+            m_progress = false;
         }
 
         else if(m_game_state == game_state_e::PLAYING_MODE){
@@ -234,7 +232,11 @@ namespace sdkg {
                 short digit2; // Var for the checking the validation of the second other character on the command
                 short value; // Var for saving the value aplied from the command line
                 short board_pos; // Var for mapping the board position which is going to change 
-                auto solution = m_total_boards[m_board_position].getSolutionBoard();  // Var for comparing with solution               
+                auto solution = m_total_boards[m_board_position].getSolutionBoard();  // Var for comparing with solution    
+                
+                // Determines that user tried a command
+                m_progress = true;
+
                 // Checks if a valid place command was written
                 if(pos != string::npos){
                     digit1 = std::toupper(m_command_line[pos+2]);
@@ -304,7 +306,7 @@ namespace sdkg {
                 }                
             }
             else{
-                m_game_state = game_state_e::CONFIRMING_QUITTING_MATCH;
+                m_game_state = game_state_e::READING_MAIN_OPT;
             }
         }
         else if(m_game_state == game_state_e::CHECKING_MOVES)
@@ -314,8 +316,14 @@ namespace sdkg {
             m_game_state = game_state_e::PLAYING_MODE;
         }
         else if(m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH){
-            if(m_quitting_match) m_game_state = game_state_e::READING_MAIN_OPT;
-            else m_game_state = game_state_e::PLAYING_MODE;
+            if(m_command_line.size() == 1){ 
+                if(m_command_line[0] == 'y' || m_command_line[0] == 'Y'){m_game_state = game_state_e::REQUESTING_NEW_GAME;}
+                else m_game_state = game_state_e::READING_MAIN_OPT;
+                m_curr_msg.clear();
+            }
+            else{
+                m_curr_msg = "Please Insert a Valid Command";
+            }
         }
     }
 
@@ -329,9 +337,15 @@ namespace sdkg {
             std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);                          
             m_total_boards[m_board_position].printBoard(false);
             std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
+            
+        }
+        if(m_game_state == game_state_e::READING_MAIN_OPT ||
+           m_game_state == game_state_e::FINISHED_PUZZLE){
             std::cout << "  1-Play  2-New Game  3-Quit  4-Help\n  Select Option [1,4] > ";
         }
-        
+        if(m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH){
+            std::cout << "  Your Choice [y/n] > ";
+        }
         else if(m_game_state == game_state_e::HELPING){
                 // Printing Main Menu Tutorial
                 clear_screen();
@@ -342,11 +356,6 @@ namespace sdkg {
                 std::cout << Color::tcolor("-------------------------------------------------------------------------------\n",Color::GREEN);
         }
 
-         else if(m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH){
-             std::cout << "==================================================\n";
-             std::cout << " Are you sure you want to return to the main menu?\n 1-Yes  0-No";
-             std::cout << "==================================================\n";
-         }        
 
         else if(m_game_state == game_state_e::PLAYING_MODE  || 
                 m_game_state == game_state_e::FINISHED_PUZZLE ||
@@ -383,4 +392,5 @@ namespace sdkg {
     bool SudokuGame::game_over(){
         return m_game_state == game_state_e::QUITTING;
     }
+
 }

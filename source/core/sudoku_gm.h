@@ -110,9 +110,9 @@ namespace sdkg {
             Options m_opt;                    //!< Overall game Options to set up the game configuration.
             game_state_e m_game_state;              //!< Current game state.
             std::string m_curr_msg;                 //!< Current message to display on screen.
-            Play m_curr_play;                       //!< Current user play.
-            bool m_quitting_match{false};                  //!< Flag that indicates whether the user wants to end an ongoing game.
-            bool m_checking_board{false};            //!< Flag that indicates whether the board will print a checked board or not
+            Play m_curr_play;                       //!< Current user play.            
+            bool m_checking_board{false};           //!< Flag that indicates whether the board will print a checked board or not
+            bool m_progress{false};                  //!< Flag that indicates whether the user has progress on the current board or not
             short m_checks_left;                    //!< Current # of checks user can request.
             main_menu_opt_e m_curr_main_menu_opt;   //!< Current main menu option.
             std::vector< Command > undo_log;        //!< Log of commands to support undoing.
@@ -134,6 +134,8 @@ namespace sdkg {
             void process_events();
             void render();
             bool game_over();
+
+            
 
     }; // SudokuGame class.
 }

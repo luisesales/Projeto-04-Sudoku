@@ -131,4 +131,9 @@ namespace sdkg {
         m_player_moves[pos] = value;
     }
 
+    void PlayerBoard::resetBoard(){
+        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
+            if(m_solution[i] < 0) m_player_moves[i] = 0;            
+        }
+    }
 }
