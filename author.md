@@ -35,10 +35,10 @@ Executa corretamente o comando de verificação do tabuleiro |12 pts| 12
 Exibe as regras do jogo quando solicitado |5 pts| 5
 Indica corretamente se uma partida finalizada foi vencida ou perdida |5 pts| ??
 Apresenta uma interface com usuário igual ou similar a que foi especificada nesse documento |5 pts| 5
-Apresenta uma validação robusta dos comandos textuais de ação fornecidos pelo usuário |5 pts| ??
+Apresenta uma validação robusta dos comandos textuais de ação fornecidos pelo usuário |5 pts| 5
 Exibe corretamente a lista de dígitos disponíveis, conforme o progresso do jogo |5 pts| ??
 Apresenta as indicações com `setas` da coordenada da célula que foi alvo da última ação |5 pts| ??
-Apresenta um fluxo correto entre telas, com opção de retomar uma partida suspensa e solicitação de confirmação de finalização de partida, caso exista uma partida em andamento |5 pts| ??
+Apresenta um fluxo correto entre telas, com opção de retomar uma partida suspensa e solicitação de confirmação de finalização de partida, caso exista uma partida em andamento |5 pts| 5
 
 # Compiling and Runnig
 
