@@ -156,11 +156,12 @@ namespace sdkg {
         else if ( m_game_state == game_state_e::PLAYING_MODE ||
                   m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH)
         {
-            // Reading Command Chosen            
+            // Reading Command Chosen   
+            m_command_line.clear();         
             std::getline(std::cin, m_command_line); 
         }
-        else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
-            
+        else if( m_game_state == game_state_e::UNDOING_PLAY){
+            m_game_state = game_state_e::PLAYING_MODE;
         }
     }
 
@@ -213,12 +214,24 @@ namespace sdkg {
             }
         }
         else if(m_game_state == game_state_e::REQUESTING_NEW_GAME){
+
             // Selecting a New Board from Read File
             m_game_state = game_state_e::READING_MAIN_OPT;
+
+            // Reseting the board he left for future plays
             m_total_boards[m_board_position].resetBoard();
+
+            // Change the board to a new board
             m_board_position = (m_board_position+1)%m_total_boards.size();    
+
+            // Resets the amount of checks for a new game
             m_checks_left = m_opt.total_checks;        
+
+            // Resets the controller for checking if theres progress
             m_progress = false;
+
+            // Reseting the undo_log for future plays
+            undo_log.clear();
         }
 
         else if(m_game_state == game_state_e::PLAYING_MODE){
@@ -232,8 +245,12 @@ namespace sdkg {
                 short digit2; // Var for the checking the validation of the second other character on the command
                 short value; // Var for saving the value aplied from the command line
                 short board_pos; // Var for mapping the board position which is going to change 
-                auto solution = m_total_boards[m_board_position].getSolutionBoard();  // Var for comparing with solution    
+                auto solution_board = m_total_boards[m_board_position].getSolutionBoard();  // Var for comparing with solution    
+                auto player_board = m_total_boards[m_board_position].getPlayerBoard(); // Var for getting values from current board
+                short aux; // Var for using on number methods
                 
+
+
                 // Determines that user tried a command
                 m_progress = true;
 
@@ -242,7 +259,8 @@ namespace sdkg {
                     digit1 = std::toupper(m_command_line[pos+2]);
                     digit2 = (m_command_line[pos+4] - '0') - 1;
                     value = m_command_line[pos+6] - '0';
-                    board_pos = (digit1 - 'A')*SB_SIZE + digit2;
+                    aux = digit1 - 'A';
+                    board_pos = aux*SB_SIZE + digit2;
                    if(
                     digit1 >= 65 && 
                     digit1 <= 74 &&
@@ -250,19 +268,27 @@ namespace sdkg {
                     digit2 <= 9 &&
                     value >= 1 &&
                     value <= 9 && 
-                    solution[board_pos] < 0)
+                    solution_board[board_pos] < 0)
                     {                    
                         // Checks if value is correct
-                        if(value == std::abs(solution[board_pos])){
+                        if(value == std::abs(solution_board[board_pos])){
+                            // Applies the correct prefix and updates board
                             value+=10;
                             m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
                         }
 
                         // Checks if value is valid
                         else{
+                            // Applies the incorrect prefix and updates board
                             value+=20;
                             m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
                         }
+
+                        // Adds to the log
+                        value = value % 10; // Updates Value
+                        m_curr_play(aux, digit2, value); // Updates Current Play
+                        Command cAux(Command::type_e::PLACE,m_curr_play); // Var for adding to the undo_log
+                        undo_log.push_back(cAux); // Adds to the vector
                     }
                     else{
                         m_curr_msg = "Please Insert a Valid Place Command";
@@ -272,17 +298,26 @@ namespace sdkg {
                     pos = m_command_line.find("r");
                     digit1 = std::toupper(m_command_line[pos+2]);
                     digit2 = (m_command_line[pos+4] - '0') - 1;
-                    board_pos = (digit1 - 'A')*SB_SIZE + digit2;
+                    aux = digit1 - 'A';
+                    board_pos = aux*SB_SIZE + digit2;
                     if(
                     pos != string::npos &&
                     digit1 >= 65 && 
                     digit1 <= 74 &&
                     digit2 >= 1 &&
                     digit2 <= 9 &&
-                    solution[board_pos] < 0)
+                    solution_board[board_pos] < 0)
                     {
+                        // Resets the board position to default value
                         value = 0;
                         m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
+
+                        // Adds to the log
+                        value = player_board[board_pos] % 10; // Updates value
+                        m_curr_play(aux, digit2, value); // Updates Current Play
+                        Command cAux(Command::type_e::REMOVE,m_curr_play); // Var for adding to the undo_log
+                        undo_log.push_back(cAux); // Adds to the vector
+                        
                     }
                     else{
                         m_curr_msg = "Please Insert a Valid Remove Command";
@@ -291,7 +326,31 @@ namespace sdkg {
                 else if(m_command_line.find("u") != string::npos &&
                         m_command_line.size() == 1)
                 {
-
+                    m_command_line.clear();    
+                    if(!undo_log.empty()){                
+                        Command undo = undo_log.back();                    
+                        char param1 = undo.data.row + 'A';
+                        char param2 = undo.data.col +'0';
+                        auto param3 = undo.data.value + '0';  
+                        
+                        if(undo.action == Command::type_e::PLACE){                        
+                            std::cout << "action place" << "\nrow " << param1 << "\ncol " << param2 << "\nvalue " << param3;                   
+                            m_command_line = "r ";
+                            m_command_line+= param1;
+                            m_command_line+=" " + param2; 
+                        }
+                        else if(undo.action == Command::type_e::REMOVE){
+                            std::cout << "action remove" << "\nrow " << param1 << "\ncol " << param2 << "\nvalue " << param3;                   
+                            m_command_line = "p ";
+                            m_command_line+= param1;
+                            m_command_line+=" " + param2;
+                            m_command_line+=" " + param3; 
+                            
+                        }
+                        std::cout << "\n\n" << m_command_line << "\n\n";
+                        m_game_state = game_state_e::UNDOING_PLAY;
+                    }
+                    else m_curr_msg = "There's No Valid Command to Undo";
                 }
 
                 else if(m_command_line.find("c") != string::npos &&
@@ -318,7 +377,7 @@ namespace sdkg {
         else if(m_game_state == game_state_e::CONFIRMING_QUITTING_MATCH){
             if(m_command_line.size() == 1){ 
                 if(m_command_line[0] == 'y' || m_command_line[0] == 'Y'){m_game_state = game_state_e::REQUESTING_NEW_GAME;}
-                else m_game_state = game_state_e::READING_MAIN_OPT;
+                else if(m_command_line[0] == 'n' || m_command_line[0] == 'N') m_game_state = game_state_e::READING_MAIN_OPT;
                 m_curr_msg.clear();
             }
             else{

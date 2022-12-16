@@ -134,7 +134,7 @@ namespace sdkg {
             void process_events();
             void render();
             bool game_over();
-
+            
             
 
     }; // SudokuGame class.
