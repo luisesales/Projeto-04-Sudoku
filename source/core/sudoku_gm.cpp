@@ -142,10 +142,10 @@ namespace sdkg {
         {
             // Reading Option Chosen
             uint aux;
-            std::cin >> aux;
             std::string line;
             std::getline(std::cin, line); 
-            if(aux > 4 || aux < 1) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
+            aux = line[0] - '0';
+            if(aux > 4 || aux < 1 || line.size() != 1) m_curr_main_menu_opt = main_menu_opt_e::INVALID;
             else{
                 aux--;
                 m_curr_main_menu_opt = main_menu_opt_e(aux);
@@ -236,7 +236,7 @@ namespace sdkg {
 
         else if(m_game_state == game_state_e::PLAYING_MODE){
             // Restarting message for the next comand
-            m_curr_msg.clear();
+            m_curr_msg.clear();            
 
             // Checks if Line has command
             if(m_command_line != ""){
@@ -268,8 +268,10 @@ namespace sdkg {
                     digit2 <= 9 &&
                     value >= 1 &&
                     value <= 9 && 
-                    solution_board[board_pos] < 0)
+                    solution_board[board_pos] < 0 &&
+                    m_command_line.size() == 7)
                     {                    
+                        
                         // Checks if value is correct
                         if(value == std::abs(solution_board[board_pos])){
                             // Applies the correct prefix and updates board
@@ -285,10 +287,12 @@ namespace sdkg {
                         }
 
                         // Adds to the log
-                        value = value % 10; // Updates Value
-                        m_curr_play(aux, digit2, value); // Updates Current Play
+                        value = value %10; // Updates value for the log
+                        digit2++; // Updates digit2 for the log
+                        m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::PLACE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
+                        
                     }
                     else{
                         m_curr_msg = "Please Insert a Valid Place Command";
@@ -306,15 +310,17 @@ namespace sdkg {
                     digit1 <= 74 &&
                     digit2 >= 1 &&
                     digit2 <= 9 &&
-                    solution_board[board_pos] < 0)
+                    solution_board[board_pos] < 0 &&
+                    m_command_line.size() == 5)
                     {
                         // Resets the board position to default value
                         value = 0;
                         m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
 
                         // Adds to the log
-                        value = player_board[board_pos] % 10; // Updates value
-                        m_curr_play(aux, digit2, value); // Updates Current Play
+                        value = player_board[board_pos] % 10; // Updates value for the log
+                        digit2++; // Updates digit2 for the log
+                        m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::REMOVE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
                         
@@ -330,21 +336,24 @@ namespace sdkg {
                     if(!undo_log.empty()){                
                         Command undo = undo_log.back();                    
                         char param1 = undo.data.row + 'A';
-                        char param2 = undo.data.col +'0';
-                        auto param3 = undo.data.value + '0';  
+                        char param2 = undo.data.col + '0';
+                        char param3 = undo.data.value + '0';  
                         
                         if(undo.action == Command::type_e::PLACE){                        
                             std::cout << "action place" << "\nrow " << param1 << "\ncol " << param2 << "\nvalue " << param3;                   
                             m_command_line = "r ";
                             m_command_line+= param1;
-                            m_command_line+=" " + param2; 
+                            m_command_line+= " ";
+                            m_command_line+= param2; 
                         }
                         else if(undo.action == Command::type_e::REMOVE){
                             std::cout << "action remove" << "\nrow " << param1 << "\ncol " << param2 << "\nvalue " << param3;                   
                             m_command_line = "p ";
                             m_command_line+= param1;
-                            m_command_line+=" " + param2;
-                            m_command_line+=" " + param3; 
+                            m_command_line+= " ";
+                            m_command_line+= param2;
+                            m_command_line+= " ";
+                            m_command_line+= param3; 
                             
                         }
                         std::cout << "\n\n" << m_command_line << "\n\n";
