@@ -92,16 +92,31 @@ namespace sdkg {
         }
     }
 
-    void PlayerBoard::printBoard(bool checking){
+    void PlayerBoard::printBoard(bool checking, short log){
         char letter = 65;
         string sLetter; 
+        short aux;
+         if(log != 0){
+            aux = log%10;
+            std::cout << "       ";
+            for(short i{0}; i < SB_SIZE;i++){
+                if(i == aux) std::cout << Color::tcolor("v",Color::BRIGHT_RED);
+                else std::cout << " ";
+            }
+            std::cout << "\n";
+        }
         std::cout << Color::tcolor("      1 2 3   4 5 6   7 8 9\n",Color::BRIGHT_BLUE);  
         for(short row{0}; row < SB_SIZE;row++){  
             if(row%3==0){
                 std::cout << "    +-------+-------+-------+\n";
             }
             sLetter = letter;
-            std::cout << Color::tcolor("   " + sLetter + "",Color::BRIGHT_BLUE); 
+            aux = log/10;
+            if(log != 0 && aux == row){ 
+                std::cout << Color::tcolor(" >",Color::BRIGHT_RED);
+                std::cout << Color::tcolor(" " + sLetter + "",Color::BRIGHT_BLUE);
+            }
+            else std::cout << Color::tcolor("   " + sLetter + "",Color::BRIGHT_BLUE); 
             letter+=1;
             for(short col{0}; col < SB_SIZE;col++){
                 if(col%3==0){

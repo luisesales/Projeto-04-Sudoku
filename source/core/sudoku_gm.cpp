@@ -288,7 +288,7 @@ namespace sdkg {
 
                         // Adds to the log
                         value = value %10; // Updates value for the log
-                        digit2++; // Updates digit2 for the log
+                        // digit2++; // Updates digit2 for the log
                         m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::PLACE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
@@ -319,7 +319,7 @@ namespace sdkg {
 
                         // Adds to the log
                         value = player_board[board_pos] % 10; // Updates value for the log
-                        digit2++; // Updates digit2 for the log
+                        // digit2++; // Updates digit2 for the log
                         m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::REMOVE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
@@ -336,7 +336,7 @@ namespace sdkg {
                     if(!undo_log.empty()){                
                         Command undo = undo_log.back();                    
                         char param1 = undo.data.row + 'A';
-                        char param2 = undo.data.col + '0';
+                        char param2 = undo.data.col + '1';
                         char param3 = undo.data.value + '0';  
                         
                         if(undo.action == Command::type_e::PLACE){                        
@@ -403,7 +403,7 @@ namespace sdkg {
             // Printing Main Menu
             clear_screen();                        
             std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);                          
-            m_total_boards[m_board_position].printBoard(false);
+            m_total_boards[m_board_position].printBoard(false,0);
             std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
             
         }
@@ -433,7 +433,9 @@ namespace sdkg {
                 std::string checks = std::to_string(m_checks_left);
                 clear_screen();
                 std::cout << Color::tcolor("|--------[ ACTION MODE ]--------|\n",Color::BRIGHT_BLUE);
-                m_total_boards[m_board_position].printBoard(m_checking_board);
+                
+                short aux = (m_curr_play.row*10)+m_curr_play.col;
+                m_total_boards[m_board_position].printBoard(m_checking_board,aux);
                 
                 // Printing Current Game Info
                 std::cout << Color::tcolor("  Checks Left: [" + checks + "]\n",Color::BRIGHT_YELLOW);

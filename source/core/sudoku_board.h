@@ -127,7 +127,7 @@ namespace sdkg {
 
             //=== Modifiers methods.
             ///Method that will print current board
-            void printBoard(bool checking);
+            void printBoard(bool checking, short log);
 
             /// Method that updates player board
             void updateBoard( SBoard &sb);
