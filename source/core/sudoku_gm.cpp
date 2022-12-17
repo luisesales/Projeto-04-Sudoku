@@ -171,10 +171,11 @@ namespace sdkg {
              m_game_state == game_state_e::FINISHED_PUZZLE )
         {
             m_game_state = game_state_e::READING_MAIN_OPT;
+            m_curr_msg.clear();
         }
         else if(m_game_state == game_state_e::READING_MAIN_OPT){
             // Updating Current Message to Default Value
-            m_curr_msg = "";
+            m_curr_msg.clear();
 
             // Updating Program Based on Main Menu Option Chosen
             switch (m_curr_main_menu_opt)
@@ -183,6 +184,7 @@ namespace sdkg {
             case main_menu_opt_e::PLAY:  
                           
                 m_game_state = game_state_e::PLAYING_MODE;
+                update_avaliable();
                 break;
             
             // Option Chosen = New Game
@@ -292,6 +294,12 @@ namespace sdkg {
                         m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::PLACE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
+                        update_avaliable();
+
+                        if(std::all_of(m_avaliable.begin(), m_avaliable.end(), [](bool e){return e==false;})){
+                            m_game_state = game_state_e::FINISHED_PUZZLE;
+                            m_curr_msg = "Congratulations! you finished the puzzle! Press enter to continue";
+                        }
                         
                     }
                     else{
@@ -323,6 +331,9 @@ namespace sdkg {
                         m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::REMOVE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
+                        update_avaliable();
+
+                        
                         
                     }
                     else{
@@ -404,7 +415,7 @@ namespace sdkg {
             clear_screen();                        
             std::cout << Color::tcolor("|--------[ MAIN SCREEN ]--------|\n",Color::BRIGHT_BLUE);                          
             m_total_boards[m_board_position].printBoard(false,0);
-            std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);
+            std::cout << Color::tcolor("  MSG : [ " + m_curr_msg + " ]\n\n",Color::BRIGHT_YELLOW);
             
         }
         if(m_game_state == game_state_e::READING_MAIN_OPT ||
@@ -438,8 +449,15 @@ namespace sdkg {
                 m_total_boards[m_board_position].printBoard(m_checking_board,aux);
                 
                 // Printing Current Game Info
-                std::cout << Color::tcolor("  Checks Left: [" + checks + "]\n",Color::BRIGHT_YELLOW);
-                std::cout << Color::tcolor("  MSG : [" + m_curr_msg + "]\n\n",Color::BRIGHT_YELLOW);     
+                std::cout << Color::tcolor("  Checks Left: [ " + checks + " ]\n",Color::BRIGHT_YELLOW);
+                std::cout << Color::tcolor("  Digits Left: [",Color::BRIGHT_YELLOW);
+                for(size_t i{0}; i < m_avaliable.size();i++){
+                    string number = std::to_string(i+1);
+                    if(m_avaliable[i] == true) std::cout << Color::tcolor(number + " ",Color::BRIGHT_YELLOW);
+                    else std::cout << " ";
+                }
+                std::cout << Color::tcolor("]\n",Color::BRIGHT_YELLOW);
+                std::cout << Color::tcolor("  MSG : [ " + m_curr_msg + " ]\n\n",Color::BRIGHT_YELLOW);     
                 
             }
         if(m_game_state == game_state_e::PLAYING_MODE){
@@ -458,9 +476,23 @@ namespace sdkg {
 
         
     }
+    
 
     bool SudokuGame::game_over(){
         return m_game_state == game_state_e::QUITTING;
+    }
+
+    void SudokuGame::update_avaliable(){
+        auto solution_board = m_total_boards[m_board_position].getSolutionBoard();
+        auto player_board = m_total_boards[m_board_position].getPlayerBoard();
+        m_avaliable = {false,false,false,false,false,false,false,false,false};
+        short aux;
+        for(short i{0}; i < SB_SIZE*SB_SIZE;i++){
+            aux = std::abs(solution_board[i]);
+            if(solution_board[i] < 0 && (player_board[i]%10) != aux){
+                m_avaliable[aux-1] = true;
+            }
+        }
     }
 
 }

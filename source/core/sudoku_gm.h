@@ -119,6 +119,8 @@ namespace sdkg {
             std::vector <PlayerBoard> m_total_boards; //!< Vector that will have all boards contained in the input file and will cycle trough.
             short m_board_position{0};                  //!< Flag that indicates which board the user is current playing on.
             std::string m_command_line;              //!< Current command line.
+            std::vector<bool> m_avaliable;                //!< Current avaliable digits to be placed
+            
 
 
         public:
@@ -134,6 +136,7 @@ namespace sdkg {
             void process_events();
             void render();
             bool game_over();
+            void update_avaliable();
             
             
 

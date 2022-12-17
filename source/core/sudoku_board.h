@@ -91,6 +91,7 @@ namespace sdkg {
         private:
             SBoard m_player_moves; //!< The Sudoku matrix where the user moves are stored.
             SBoard m_solution;     //!< The Sudoku matrix with the solution.
+            
 
         public:
             /// Possible types associated with a location on the board druring a match.

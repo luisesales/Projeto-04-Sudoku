@@ -98,10 +98,11 @@ namespace sdkg {
         short aux;
          if(log != 0){
             aux = log%10;
-            std::cout << "       ";
+            std::cout << "    ";
             for(short i{0}; i < SB_SIZE;i++){
+                if(i%3==0) std::cout << "  ";                
                 if(i == aux) std::cout << Color::tcolor("v",Color::BRIGHT_RED);
-                else std::cout << " ";
+                else std::cout << "  ";
             }
             std::cout << "\n";
         }
