@@ -242,7 +242,9 @@ namespace sdkg {
 
             // Checks if Line has command
             if(m_command_line != ""){
-                size_t pos{m_command_line.find("p")}; // Var for checking if any of known commands were put inside the command line
+                
+                auto comands = split(m_command_line,' ');
+                size_t size{comands.size()}; // Var for checking if any of known commands were put inside the command line
                 char digit1; // Var for the checking the validation of the first other character on the command
                 short digit2; // Var for the checking the validation of the second other character on the command
                 short value; // Var for saving the value aplied from the command line
@@ -255,41 +257,45 @@ namespace sdkg {
 
                 // Determines that user tried a command
                 m_progress = true;
-
-                // Checks if a valid place command was written
-                if(pos != string::npos){
-                    digit1 = std::toupper(m_command_line[pos+2]);
-                    digit2 = (m_command_line[pos+4] - '0') - 1;
-                    value = m_command_line[pos+6] - '0';
+                if(size >= 3){
+                    digit1 = std::toupper(comands[1][0]);
+                    digit2 = (comands[2][0] - '0') - 1;
                     aux = digit1 - 'A';
                     board_pos = aux*SB_SIZE + digit2;
-                   if(
-                    digit1 >= 65 && 
-                    digit1 <= 74 &&
-                    digit2 >= 1 &&
-                    digit2 <= 9 &&
-                    value >= 1 &&
-                    value <= 9 && 
-                    solution_board[board_pos] < 0 &&
-                    m_command_line.size() == 7)
+                }
+
+                // Checks if a valid place command was written
+                if(
+                        comands[0][0] == 'p' &&
+                        size == 4)
+                {
+                    value =  comands[3][0] - '0';
+                    if(
+                        digit1 >= 65 && 
+                        digit1 <= 74 &&
+                        digit2 >= 1 &&
+                        digit2 <= 9 &&
+                        value >= 1 &&
+                        value <= 9 && 
+                        solution_board[board_pos] < 0 )
                     {                    
                         
                         // Checks if value is correct
                         if(value == std::abs(solution_board[board_pos])){
                             // Applies the correct prefix and updates board
-                            value+=10;
+                            value += 10;
                             m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
                         }
 
                         // Checks if value is valid
                         else{
                             // Applies the incorrect prefix and updates board
-                            value+=20;
+                            value += 20;
                             m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
                         }
 
                         // Adds to the log
-                        value = value %10; // Updates value for the log
+                        value = value % 10; // Updates value for the log
                         // digit2++; // Updates digit2 for the log
                         m_curr_play = Play(aux, digit2, value); // Updates Current Play
                         Command cAux(Command::type_e::PLACE,m_curr_play); // Var for adding to the undo_log
@@ -306,20 +312,16 @@ namespace sdkg {
                         m_curr_msg = "Please Insert a Valid Place Command";
                     }
                 }
-                else if(m_command_line.find("r") != string::npos){ 
-                    pos = m_command_line.find("r");
-                    digit1 = std::toupper(m_command_line[pos+2]);
-                    digit2 = (m_command_line[pos+4] - '0') - 1;
-                    aux = digit1 - 'A';
-                    board_pos = aux*SB_SIZE + digit2;
+
+                else if(comands[0][0] == 'r'){ 
+                    
                     if(
-                    pos != string::npos &&
                     digit1 >= 65 && 
                     digit1 <= 74 &&
                     digit2 >= 1 &&
                     digit2 <= 9 &&
                     solution_board[board_pos] < 0 &&
-                    m_command_line.size() == 5)
+                    size == 3)
                     {
                         // Resets the board position to default value
                         value = 0;
@@ -332,16 +334,13 @@ namespace sdkg {
                         Command cAux(Command::type_e::REMOVE,m_curr_play); // Var for adding to the undo_log
                         undo_log.push_back(cAux); // Adds to the vector
                         update_avaliable();
-
-                        
-                        
                     }
                     else{
                         m_curr_msg = "Please Insert a Valid Remove Command";
                     }
                 }
-                else if(m_command_line.find("u") != string::npos &&
-                        m_command_line.size() == 1)
+                else if(comands[0][0] == 'u' &&
+                        size == 1)
                 {
                     m_command_line.clear();    
                     if(!undo_log.empty()){                
@@ -373,8 +372,8 @@ namespace sdkg {
                     else m_curr_msg = "There's No Valid Command to Undo";
                 }
 
-                else if(m_command_line.find("c") != string::npos &&
-                        m_command_line.size() == 1 &&
+                else if(comands[0][0] == 'c' &&
+                        size == 1 &&
                         m_checks_left > 0)
                 {
                     m_game_state = game_state_e::CHECKING_MOVES;
@@ -450,7 +449,7 @@ namespace sdkg {
                 
                 // Printing Current Game Info
                 std::cout << Color::tcolor("  Checks Left: [ " + checks + " ]\n",Color::BRIGHT_YELLOW);
-                std::cout << Color::tcolor("  Digits Left: [",Color::BRIGHT_YELLOW);
+                std::cout << Color::tcolor("  Digits Left: [ ",Color::BRIGHT_YELLOW);
                 for(size_t i{0}; i < m_avaliable.size();i++){
                     string number = std::to_string(i+1);
                     if(m_avaliable[i] == true) std::cout << Color::tcolor(number + " ",Color::BRIGHT_YELLOW);
@@ -493,6 +492,20 @@ namespace sdkg {
                 m_avaliable[aux-1] = true;
             }
         }
+    }
+
+    /// Splits the input string based on `delimiter` into a list of substrings.
+    std::vector<std::string> SudokuGame::split(const std::string & input_str, char delimiter){
+        // Store the tokens.
+        std::vector<std::string> tokens;
+        // read tokens from a string buffer.
+        std::istringstream iss;
+        iss.str(input_str);
+        // This will hold a single token temporarily.
+        std::string token;
+        while (std::getline(iss >> std::ws, token, delimiter))
+            tokens.emplace_back(token);
+        return tokens;
     }
 
 }

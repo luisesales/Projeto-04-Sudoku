@@ -1,4 +1,4 @@
-# Install script for directory: /home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source
+# Install script for directory: /home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

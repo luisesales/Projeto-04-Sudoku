@@ -137,6 +137,7 @@ namespace sdkg {
             void render();
             bool game_over();
             void update_avaliable();
+            std::vector<std::string> split(const std::string & input_str, char delimiter);
             
             
 

@@ -6,5 +6,5 @@ CXX_FLAGS =  -Wall    -std=gnu++1z
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib 
+CXX_INCLUDES = -I/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib 
 

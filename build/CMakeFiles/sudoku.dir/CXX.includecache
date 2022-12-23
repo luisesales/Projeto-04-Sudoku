@@ -6,19 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/main.cpp
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/main.cpp
 cstdlib
 -
 sudoku_gm.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_gm.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.cpp
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_board.cpp
 algorithm
 -
 sudoku_board.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_board.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_board.h
 fstream
 -
 string
@@ -42,11 +42,11 @@ numeric
 dirent.h
 -
 ../lib/messages.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/messages.h
 ../lib/text_color.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/text_color.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/text_color.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.cpp
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_gm.cpp
 cassert
 -
 stdexcept
@@ -56,9 +56,9 @@ iterator
 string.h
 -
 sudoku_gm.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_gm.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_gm.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_gm.h
 fstream
 -
 thread
@@ -78,13 +78,13 @@ sstream
 numeric
 -
 sudoku_board.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/core/sudoku_board.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/core/sudoku_board.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.cpp
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/messages.cpp
 messages.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/messages.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/messages.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/messages.h
 iostream
 -
 iomanip
@@ -94,9 +94,9 @@ string
 sstream
 -
 text_color.h
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/text_color.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/text_color.h
 
-/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/lib/text_color.h
+/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/lib/text_color.h
 sstream
 -
 string

@@ -10,7 +10,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.10.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.10.2/CMakeSystem.cmake"
   "CMakeFiles/feature_tests.cxx"
-  "/home/luis/Documentos/Programas/LP1/Sudoku/merge/trabalho-04-sudoku-interativo-individual-luisesales/source/CMakeLists.txt"
+  "/home/luis/Documentos/Programas/LP1/Sudoku/Projeto-05-Sudoku/source/CMakeLists.txt"
   "/usr/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in"
   "/usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp"
   "/usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake"
