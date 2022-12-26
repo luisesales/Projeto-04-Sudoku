@@ -143,7 +143,7 @@ namespace sdkg {
         std::cout << "    +-------+-------+-------+\n";
     }
 
-    void PlayerBoard::updateBoardPotition(short & pos, short & value){
+    void PlayerBoard::updateBoardPosition(short & pos, short & value){
         m_player_moves[pos] = value;
     }
 

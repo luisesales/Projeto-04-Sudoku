@@ -287,7 +287,16 @@ namespace sdkg {
                             m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
                         }
 
-                        // Checks if value is valid
+                        // Checks if value is invalid
+                        // bool invalid{false}; // bool for validating invalid input
+                        // vector<short> aux;
+                        // for(short i{aux*SB_SIZE}; i < (aux*SB_SIZE+SB_SIZE); i++) aux.push_back(m_total_boards[m_board_position][i]);
+                        // if(SBoard::validate(aux));
+                        // else if(invalid){
+                        //     value += 40;
+                        //     m_total_boards[m_board_position].updateBoardPotition( board_pos, value);
+                        //     m_curr_msg = "This Value input is Invalid but it's upt to you to keep it";
+                        // }
                         else{
                             // Applies the incorrect prefix and updates board
                             value += 20;
@@ -365,8 +374,7 @@ namespace sdkg {
                             m_command_line+= " ";
                             m_command_line+= param3; 
                             
-                        }
-                        std::cout << "\n\n" << m_command_line << "\n\n";
+                        }                        
                         m_game_state = game_state_e::UNDOING_PLAY;
                     }
                     else m_curr_msg = "There's No Valid Command to Undo";

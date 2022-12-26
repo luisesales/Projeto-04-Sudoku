@@ -134,7 +134,7 @@ namespace sdkg {
             void updateBoard( SBoard &sb);
 
             /// Method that updates player board in a single position
-            void updateBoardPotition(short & pos, short & value);
+            void updateBoardPosition(short & pos, short & value);
 
             /// Method for resetting player_moves board to original form
             void resetBoard();
